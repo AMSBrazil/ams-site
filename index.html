@@ -271,6 +271,40 @@
       .mosaic{min-height:auto}
       .langSwitch{min-width:auto}
     }
+/* ===== HEADER MOBILE FIX ===== */
+@media (max-width: 768px){
+
+  .topbar{
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+
+  .brand img{
+    width:150px; /* reduz logo no mobile */
+  }
+
+  nav{
+    width:100%;
+    order:3;
+    display:flex;
+    justify-content:space-around;
+    gap:0;
+    padding-top:6px;
+  }
+
+  nav a{
+    padding:8px 6px;
+    font-size:14px;
+  }
+
+  .langSwitch{
+    min-width:auto;
+    order:2;
+  }
+}
+
   </style>
 </head>
 <body>
