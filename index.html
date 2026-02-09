@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AMS | Adaptive Motion Solutions</title>
+  <meta name="description" content="Soluções aplicadas ao comportamento motor" />
+  <style>
+
+    :root{
+      --bg:#fbf7fb;
+      --ink:#2a1f3a;
+      --muted:#5a4c6a;
+      --accent:#ff6aa7;
+      --accent2:#6d3cff;
+      --card:#ffffff;
+      --shadow:0 18px 55px rgba(25,10,45,.12);
+      --radius:22px;
+      --max:1120px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--ink);
+      background: radial-gradient(1200px 500px at 70% 20%, rgba(255,106,167,.09), transparent 55%),
+                  radial-gradient(900px 500px at 20% 70%, rgba(109,60,255,.07), transparent 55%),
+                  var(--bg);
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 20px;}
+    header{
+      position:sticky; top:0; z-index:50;
+      background:rgba(251,247,251,.75);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(42,31,58,.06);
+    }
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px; min-width:240px;
+    }
+    .brand img{
+      width:210px;
+      height:auto;
+      display:block;
+      background:transparent;
+      border-radius:0;
+      padding:0;
+      box-shadow:none;
+    }
+
+    nav{
+      display:flex; gap:22px; flex-wrap:wrap;
+      justify-content:center;
+    }
+    nav a{
+      font-weight:600;
+      color:rgba(42,31,58,.72);
+      padding:10px 10px;
+      border-radius:12px;
+    }
+    nav a:hover{background:rgba(109,60,255,.07); color:var(--ink);}
+
+    /* HERO */
+    .hero{padding:54px 0 22px;}
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:34px;
+      align-items:center;
+    }
+    .kicker{
+      color:rgba(109,60,255,.85);
+      font-weight:700;
+      letter-spacing:.02em;
+      margin-bottom:12px;
+    }
+    h1{
+      font-size: clamp(34px, 4.2vw, 64px);
+      line-height:1.04;
+      margin:0 0 16px;
+      letter-spacing:-.02em;
+    }
+    .lead{
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.65;
+      max-width:54ch;
+      margin:0 0 22px;
+    }
+    .ctaRow{display:flex; gap:14px; flex-wrap:wrap; align-items:center;}
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:14px 18px;
+      border-radius:999px;
+      font-weight:800;
+      border:1px solid transparent;
+      box-shadow: 0 14px 40px rgba(25,10,45,.10);
+      transition: transform .15s ease, box-shadow .15s ease;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px); box-shadow: 0 18px 55px rgba(25,10,45,.14);}
+    .btnPrimary{
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      color:white;
+    }
+    .btnGhost{
+      background: rgba(255,255,255,.75);
+      border-color: rgba(42,31,58,.14);
+      color: rgba(42,31,58,.9);
+    }
+    .arrow{font-weight:900}
+
+    /* Mosaic */
+    .mosaic{position:relative; background:transparent; min-height:420px;}
+    .dots{
+      position:absolute; inset:auto 6px 6px auto;
+      width:150px; height:150px;
+      background: radial-gradient(circle, rgba(255,106,167,.55) 1.6px, transparent 1.7px);
+      background-size: 12px 12px;
+      border-radius:24px;
+      opacity:.45;
+      transform: translate(10px,-10px);
+      pointer-events:none;
+    }
+    .tri1,.tri2{position:absolute; width:0; height:0; border-style:solid; opacity:.75; pointer-events:none;}
+    .tri1{
+      border-width: 0 0 18px 18px;
+      border-color: transparent transparent var(--accent2) transparent;
+      left: 18px; top: 8px;
+      transform: rotate(18deg);
+    }
+    .tri2{
+      border-width: 16px 0 0 16px;
+      border-color: transparent transparent transparent var(--accent);
+      right: 18px; bottom: 16px;
+      transform: rotate(-12deg);
+    }
+
+    .gridPics{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      padding:10px;
+      background: rgba(255,255,255,.45);
+      border:1px solid rgba(42,31,58,.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .pic{
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(109,60,255,.25), rgba(255,106,167,.22));
+      border:1px solid rgba(42,31,58,.08);
+      overflow:hidden;
+      min-height:140px;
+      position:relative;
+    }
+    .pic img{width:100%; height:100%; object-fit:cover; display:block;}
+    .picLabel{
+      position:absolute; left:10px; bottom:10px;
+      font-size:12px; font-weight:800;
+      background: rgba(255,255,255,.78);
+      border:1px solid rgba(42,31,58,.12);
+      padding:6px 10px;
+      border-radius:999px;
+      color:rgba(42,31,58,.85);
+      backdrop-filter: blur(6px);
+    }
+    .picTall{grid-row: span 2; min-height:294px;}
+
+    /* Sections */
+    section{padding:42px 0;}
+    .sectionTitle{font-size:28px; margin:0 0 10px; letter-spacing:-.01em;}
+    .sectionDesc{color:var(--muted); margin:0 0 18px; line-height:1.7; max-width:72ch;}
+
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .card{
+      background: rgba(255,255,255,.72);
+      border:1px solid rgba(42,31,58,.10);
+      border-radius: 20px;
+      padding:18px;
+      box-shadow: 0 12px 36px rgba(25,10,45,.08);
+    }
+    .card h3{margin:0 0 8px; font-size:16px;}
+    .card p{margin:0; color:var(--muted); line-height:1.65; font-size:14px;}
+    .tag{
+      display:inline-flex; align-items:center;
+      font-size:12px; font-weight:800;
+      color:rgba(42,31,58,.78);
+      background: rgba(109,60,255,.08);
+      border:1px solid rgba(109,60,255,.16);
+      padding:6px 10px; border-radius:999px;
+      margin-bottom:10px;
+    }
+
+    /* Contact */
+    .contactBox{display:grid; grid-template-columns:1fr; gap:14px; align-items:stretch;}
+    .contactCard{
+      background: rgba(255,255,255,.72);
+      border:1px solid rgba(42,31,58,.10);
+      border-radius: 20px;
+      padding:18px;
+      box-shadow: 0 12px 36px rgba(25,10,45,.08);
+    }
+    .contactCard a{font-weight:600; color:rgba(109,60,255,.95);}
+    .contactInline{
+      margin-top:12px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+    }
+    .contactInline a{
+      font-weight:600;
+      color:rgba(109,60,255,.95);
+      text-decoration:underline;
+      text-underline-offset:3px;
+    }
+
+    footer{padding:26px 0 40px; color:rgba(42,31,58,.65); font-size:13px;}
+
+    /* Language switch */
+    .langSwitch{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      justify-content:flex-end;
+      min-width:240px;
+    }
+    .langBtn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.65);
+      border:1px solid rgba(42,31,58,.14);
+      color:rgba(42,31,58,.85);
+      font-size:13px;
+      font-weight:700;
+      cursor:pointer;
+      user-select:none;
+    }
+    .langBtn:hover{background:rgba(109,60,255,.07)}
+    .langBtn[aria-pressed="true"]{
+      border-color: rgba(109,60,255,.35);
+      box-shadow: 0 10px 25px rgba(25,10,45,.10);
+    }
+    .flagIcon{
+      width:18px;
+      height:18px;
+      display:block;
+      border-radius:50%;
+      overflow:hidden;
+    }
+    .langLabel{font-weight:800; letter-spacing:.01em;}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .heroGrid{grid-template-columns:1fr; gap:22px;}
+      .brand{min-width:auto}
+      .cards{grid-template-columns:1fr;}
+      .mosaic{min-height:auto}
+      .langSwitch{min-width:auto}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap topbar">
+    <div class="brand">
+      <img src="logo.png" alt="AMS - Adaptive Motion Solutions" />
+    </div>
+
+    <nav>
+      <a href="#home" data-i18n="nav_home">Início</a>
+      <a href="#about" data-i18n="nav_about">Sobre</a>
+      <a href="#services" data-i18n="nav_services">Serviços</a>
+      <a href="#contact" data-i18n="nav_contact">Contato</a>
+    </nav>
+
+    <div class="langSwitch" aria-label="Language selector">
+      <button class="langBtn" id="btnPT" type="button" aria-pressed="true" title="Português (Brasil)">
+        <svg class="flagIcon" viewBox="0 0 64 64" aria-hidden="true">
+          <defs><clipPath id="cBR"><circle cx="32" cy="32" r="32"/></clipPath></defs>
+          <g clip-path="url(#cBR)">
+            <rect width="64" height="64" fill="#1aa34a"/>
+            <polygon points="32,10 56,32 32,54 8,32" fill="#ffd34d"/>
+            <circle cx="32" cy="32" r="12.5" fill="#1f4fbf"/>
+            <path d="M18 30c7 6 21 6 28 0" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <span class="langLabel">PT</span>
+      </button>
+
+      <button class="langBtn" id="btnEN" type="button" aria-pressed="false" title="English (US)">
+        <svg class="flagIcon" viewBox="0 0 64 64" aria-hidden="true">
+          <defs><clipPath id="cUS"><circle cx="32" cy="32" r="32"/></clipPath></defs>
+          <g clip-path="url(#cUS)">
+            <rect width="64" height="64" fill="#ffffff"/>
+            <g fill="#d22f2f">
+              <rect x="0" y="0" width="64" height="6"/>
+              <rect x="0" y="12" width="64" height="6"/>
+              <rect x="0" y="24" width="64" height="6"/>
+              <rect x="0" y="36" width="64" height="6"/>
+              <rect x="0" y="48" width="64" height="6"/>
+              <rect x="0" y="60" width="64" height="6"/>
+            </g>
+            <rect x="0" y="0" width="30" height="22" fill="#1f4fbf"/>
+            <g fill="#ffffff" opacity="0.95">
+              <circle cx="5" cy="4" r="1.1"/><circle cx="11" cy="4" r="1.1"/><circle cx="17" cy="4" r="1.1"/><circle cx="23" cy="4" r="1.1"/>
+              <circle cx="8" cy="8" r="1.1"/><circle cx="14" cy="8" r="1.1"/><circle cx="20" cy="8" r="1.1"/><circle cx="26" cy="8" r="1.1"/>
+              <circle cx="5" cy="12" r="1.1"/><circle cx="11" cy="12" r="1.1"/><circle cx="17" cy="12" r="1.1"/><circle cx="23" cy="12" r="1.1"/>
+              <circle cx="8" cy="16" r="1.1"/><circle cx="14" cy="16" r="1.1"/><circle cx="20" cy="16" r="1.1"/><circle cx="26" cy="16" r="1.1"/>
+            </g>
+          </g>
+        </svg>
+        <span class="langLabel">EN</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="home" class="hero">
+  <div class="wrap heroGrid">
+    <div>
+      <div class="kicker">Adaptive Motion Solutions</div>
+
+      <h1 data-i18n="hero_h1">Tecnologia voltada ao comportamento humano</h1>
+
+      <p class="lead" data-i18n="hero_lead">
+        Desenvolvemos instrumentação e softwares aplicados à análise do movimento humano.
+        Também conduzimos P&D de soluções assistivas/lúdicas voltadas ao neurodesenvolvimento.
+      </p>
+
+      <div class="ctaRow">
+        <a class="btn btnPrimary" href="#about" data-i18n="btn_more">Saiba mais ↗</a>
+        <a class="btn btnGhost" href="#contact" data-i18n="btn_quote">Solicitar cotação</a>
+      </div>
+    </div>
+
+    <div class="mosaic" aria-label="Galeria">
+      <div class="tri1"></div>
+      <div class="tri2"></div>
+      <div class="dots"></div>
+
+      <div class="gridPics">
+        <div class="pic">
+          <img src="integracao_testes.png" alt="" onerror="this.remove()">
+          <div class="picLabel" data-i18n="pic_integration">Integração de sinais</div>
+        </div>
+
+        <div class="pic picTall">
+          <img src="optical_sensing.png" alt="" onerror="this.remove()">
+          <div class="picLabel" data-i18n="pic_optical">Eye-tracking</div>
+        </div>
+
+        <div class="pic">
+          <img src="analise_sinais.png" alt="" onerror="this.remove()">
+          <div class="picLabel" data-i18n="pic_processing">Processamento de sinais</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<section id="about">
+  <div class="wrap">
+    <h2 class="sectionTitle" data-i18n="about_title">Sobre</h2>
+    <p class="sectionDesc" data-i18n="about_desc">
+      A Adaptive Motion Solutions (AMS) é uma empresa brasileira dedicada ao desenvolvimento de tecnologias para mensuração
+      e análise do comportamento humano. Estamos iniciando operações para atender projetos a partir de 2026, em colaboração
+      com grupos acadêmicos e iniciativas aplicadas em pesquisa, saúde, ergonomia e desempenho humano.
+    </p>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <h2 class="sectionTitle" data-i18n="services_title">Serviços</h2>
+    <p class="sectionDesc" data-i18n="services_desc">
+      Entregamos soluções completas (hardware + software) e serviços técnicos para projetos sob demanda.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="tag" data-i18n="tag_instrumentation">Instrumentação</div>
+        <h3 data-i18n="svc1_title">Sistemas ópticos</h3>
+        <p data-i18n="svc1_desc">Hardware para captura da oculomotricidade com módulos de sincronização.</p>
+      </div>
+
+      <div class="card">
+        <div class="tag" data-i18n="tag_software">Software</div>
+        <h3 data-i18n="svc2_title">Analytics de movimento humano</h3>
+        <p data-i18n="svc2_desc">Ferramentas e módulos de análise para dados motores, integração e relatórios sob demanda.</p>
+      </div>
+
+      <div class="card">
+        <div class="tag" data-i18n="tag_rd">P&D</div>
+        <h3 data-i18n="svc3_title">Soluções assistivas e lúdicas</h3>
+        <p data-i18n="svc3_desc">Linha em desenvolvimento voltada a autonomia e participação de crianças com demandas do neurodesenvolvimento.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:18px;">
+      <a class="btn btnPrimary" href="#contact" data-i18n="btn_quote">Solicitar cotação</a>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <h2 class="sectionTitle" data-i18n="contact_title">Contato</h2>
+
+    <div class="contactBox">
+      <div class="contactCard">
+        <h3 style="margin:0 0 12px;" data-i18n="contact_msg_title">Mensagem</h3>
+
+        <form id="contactForm" method="POST" data-endpoint="https://formspree.io/f/xnjbqllj">
+          <div style="display:grid;gap:10px;">
+            <input name="name" type="text" placeholder="Seu nome" required data-i18n-placeholder="ph_name"
+              style="padding:12px 14px;border-radius:14px;border:1px solid rgba(42,31,58,.14);background:rgba(255,255,255,.8);">
+
+            <input name="email" type="email" placeholder="Seu e-mail" required data-i18n-placeholder="ph_email"
+              style="padding:12px 14px;border-radius:14px;border:1px solid rgba(42,31,58,.14);background:rgba(255,255,255,.8);">
+
+            <input name="subject" type="text" placeholder="Assunto (ex.: cotação, parceria, dúvida)" data-i18n-placeholder="ph_subject"
+              style="padding:12px 14px;border-radius:14px;border:1px solid rgba(42,31,58,.14);background:rgba(255,255,255,.8);">
+
+            <textarea name="message" rows="5" placeholder="Fale com a AMS" required data-i18n-placeholder="ph_message"
+              style="padding:12px 14px;border-radius:14px;border:1px solid rgba(42,31,58,.14);background:rgba(255,255,255,.8);resize:vertical;"></textarea>
+
+            <input type="text" name="_gotcha" style="display:none">
+            <input type="hidden" name="_subject" value="Novo contato via site AMS">
+
+            <button class="btn btnPrimary" type="submit" style="justify-content:center;" data-i18n="btn_send">
+              Enviar ↗
+            </button>
+
+            <p id="formStatus" style="margin:6px 0 0;color:var(--muted);font-size:14px;line-height:1.5;"></p>
+          </div>
+        </form>
+
+        <p class="contactInline">
+          <span data-i18n="contact_inline">Prefere e-mail? Escreva para</span>
+          <a href="mailto:contact@amsbrazil.com">contact@amsbrazil.com</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    © <span id="y"></span> Adaptive Motion Solutions (AMS). <span data-i18n="rights">All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("y").textContent = new Date().getFullYear();
+</script>
+
+<script>
+(function(){
+  const dict = {
+    pt: {
+      nav_home:"Início", nav_about:"Sobre", nav_services:"Serviços", nav_contact:"Contato",
+      hero_h1:"Tecnologia voltada ao comportamento humano",
+      hero_lead:"Desenvolvemos instrumentação e softwares aplicados à análise do movimento humano. Também conduzimos P&D de soluções assistivas/lúdicas voltadas ao neurodesenvolvimento.",
+      btn_more:"Saiba mais ↗", btn_quote:"Solicitar cotação", btn_send:"Enviar ↗",
+
+      pic_integration:"Integração de sinais", pic_optical:"Rastreamento ocular", pic_processing:"Processamento de sinais",
+
+      about_title:"Sobre",
+      about_desc:"A Adaptive Motion Solutions (AMS) é uma empresa brasileira dedicada ao desenvolvimento de tecnologias para mensuração e análise do comportamento humano. Estamos iniciando operações para atender projetos a partir de 2026, em colaboração com grupos acadêmicos e iniciativas aplicadas em pesquisa, saúde, ergonomia e desempenho humano.",
+
+      services_title:"Serviços",
+      services_desc:"Entregamos soluções completas (hardware + software) e serviços técnicos para projetos sob demanda.",
+
+      tag_instrumentation:"Instrumentação", tag_software:"Software", tag_rd:"P&D",
+      svc1_title:"Sistemas ópticos", svc1_desc:"Hardware para captura da oculomotricidade com módulos de sincronização.",
+      svc2_title:"Analytics de movimento humano", svc2_desc:"Ferramentas e módulos de análise para dados motores, integração e relatórios sob demanda.",
+      svc3_title:"Soluções assistivas e lúdicas", svc3_desc:"Linha em desenvolvimento voltada a autonomia e participação de crianças com demandas do neurodesenvolvimento.",
+
+      contact_title:"Contato", contact_msg_title:"Mensagem",
+      contact_inline:"Prefere e-mail? Escreva para",
+
+      ph_name:"Seu nome", ph_email:"Seu e-mail", ph_subject:"Assunto (ex.: cotação, parceria, dúvida)", ph_message:"Fale com a AMS",
+
+      sending:"Enviando...",
+      sent_ok:"Mensagem enviada com sucesso!",
+      sent_fail:"Não foi possível enviar agora. Tente novamente ou nos envie um e-mail: contact@amsbrazil.com",
+      sent_err:"Erro de conexão. Tente novamente ou nos envie um e-mail: contact@amsbrazil.com",
+
+      rights:"Todos os direitos reservados."
+    },
+
+    en: {
+      nav_home:"Home", nav_about:"About", nav_services:"Services", nav_contact:"Contact",
+      hero_h1:"Technology for human behavior measurement",
+      hero_lead:"We develop instrumentation and software for human-movement analysis. We also conduct R&D on assistive and playful solutions focused on neurodevelopment.",
+      btn_more:"Learn more ↗", btn_quote:"Request a quote", btn_send:"Send ↗",
+
+      pic_integration:"Signal integration", pic_optical:"Eye-tracking", pic_processing:"Signal processing",
+
+      about_title:"About",
+      about_desc:"Adaptive Motion Solutions (AMS) is a Brazilian company dedicated to developing technologies for measuring and analyzing human behavior. We are starting operations to support projects from 2026 onward, collaborating with academic groups and applied initiatives in research, health, ergonomics, and human performance.",
+
+      services_title:"Services",
+      services_desc:"We deliver complete solutions (hardware + software) and technical services for custom projects.",
+
+      tag_instrumentation:"Instrumentation", tag_software:"Software", tag_rd:"R&D",
+      svc1_title:"Optical systems", svc1_desc:"Hardware for oculomotor capture with synchronization modules.",
+      svc2_title:"Human-movement analytics", svc2_desc:"Tools and modules for motor-data analysis, integrations, and on-demand reporting.",
+      svc3_title:"Assistive & playful solutions", svc3_desc:"A development line focused on autonomy and participation for children with neurodevelopment-related needs.",
+
+      contact_title:"Contact", contact_msg_title:"Message",
+      contact_inline:"Prefer email? Write to",
+
+      ph_name:"Your name", ph_email:"Your email", ph_subject:"Subject (e.g., quote, partnership, question)", ph_message:"Write to AMS",
+
+      sending:"Sending...",
+      sent_ok:"Message sent successfully!",
+      sent_fail:"Could not send right now. Please try again or email us at: contact@amsbrazil.com",
+      sent_err:"Connection error. Please try again or email us at: contact@amsbrazil.com",
+
+      rights:"All rights reserved."
+    }
+  };
+
+  let currentLang = "pt";
+
+  function applyLang(lang){
+    currentLang = (lang === "en") ? "en" : "pt";
+    const t = dict[currentLang];
+
+    document.documentElement.lang = (currentLang === "en") ? "en" : "pt-BR";
+
+    document.querySelectorAll("[data-i18n]").forEach(el=>{
+      const key = el.getAttribute("data-i18n");
+      if(t[key]) el.textContent = t[key];
+    });
+
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
+      const key = el.getAttribute("data-i18n-placeholder");
+      if(t[key]) el.setAttribute("placeholder", t[key]);
+    });
+
+    const btnPT = document.getElementById("btnPT");
+    const btnEN = document.getElementById("btnEN");
+    if(btnPT && btnEN){
+      btnPT.setAttribute("aria-pressed", currentLang === "pt" ? "true" : "false");
+      btnEN.setAttribute("aria-pressed", currentLang === "en" ? "true" : "false");
+    }
+
+    localStorage.setItem("ams_lang", currentLang);
+  }
+
+  function detectLang(){
+    const saved = localStorage.getItem("ams_lang");
+    if(saved === "pt" || saved === "en") return saved;
+    const nav = (navigator.language || "").toLowerCase();
+    return nav.startsWith("pt") ? "pt" : "en";
+  }
+
+  window.AMS_i18n = {dict, applyLang, getLang: ()=>currentLang};
+
+  applyLang(detectLang());
+
+  const btnPT = document.getElementById("btnPT");
+  const btnEN = document.getElementById("btnEN");
+  if(btnPT) btnPT.addEventListener("click", ()=>applyLang("pt"));
+  if(btnEN) btnEN.addEventListener("click", ()=>applyLang("en"));
+})();
+</script>
+
+<script>
+(function(){
+  const form = document.getElementById("contactForm");
+  const status = document.getElementById("formStatus");
+  if(!form || !status) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const i18n = window.AMS_i18n;
+    const lang = i18n ? i18n.getLang() : "pt";
+    const t = (i18n && i18n.dict && i18n.dict[lang]) ? i18n.dict[lang] : null;
+
+    status.textContent = t ? t.sending : "Enviando...";
+    const endpoint = form.getAttribute("data-endpoint");
+
+    try{
+      const data = new FormData(form);
+      const res = await fetch(endpoint, {
+        method: "POST",
+        body: data,
+        headers: { "Accept": "application/json" }
+      });
+
+      if(res.ok){
+        form.reset();
+        status.textContent = t ? t.sent_ok : "Mensagem enviada com sucesso!";
+      }else{
+        status.textContent = t ? t.sent_fail : "Não foi possível enviar agora. Tente novamente ou nos envie um e-mail: contact@amsbrazil.com";
+      }
+    }catch(err){
+      status.textContent = t ? t.sent_err : "Erro de conexão. Tente novamente ou nos envie um e-mail: contact@amsbrazil.com";
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
