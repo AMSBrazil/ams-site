@@ -114,7 +114,6 @@
       border-color: rgba(42,31,58,.14);
       color: rgba(42,31,58,.9);
     }
-    .arrow{font-weight:900}
 
     /* Mosaic */
     .mosaic{position:relative; background:transparent; min-height:420px;}
@@ -189,6 +188,8 @@
       border-radius: 20px;
       padding:18px;
       box-shadow: 0 12px 36px rgba(25,10,45,.08);
+      position:relative; /* for plus button */
+      overflow:hidden;
     }
     .card h3{margin:0 0 8px; font-size:16px;}
     .card p{margin:0; color:var(--muted); line-height:1.65; font-size:14px;}
@@ -202,6 +203,92 @@
       margin-bottom:10px;
     }
 
+    /* ===== PLUS BUTTON (NEW) ===== */
+    .plusBtn{
+      position:absolute;
+      right:14px;
+      bottom:14px;
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      border:1px solid rgba(42,31,58,.14);
+      background: rgba(255,255,255,.78);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:18px;
+      color:rgba(42,31,58,.85);
+      cursor:pointer;
+      box-shadow: 0 10px 26px rgba(25,10,45,.08);
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .plusBtn:hover{
+      background: rgba(255,255,255,.95);
+      transform: translateY(-1px);
+      box-shadow: 0 14px 34px rgba(25,10,45,.10);
+    }
+    .plusBtn[aria-expanded="true"]{
+      background: rgba(109,60,255,.10);
+      border-color: rgba(109,60,255,.28);
+    }
+
+    /* ===== SPECS PANEL (NEW) ===== */
+    .specsPanel{
+      margin-top:14px;
+      background: rgba(255,255,255,.72);
+      border:1px solid rgba(42,31,58,.10);
+      border-radius: 22px;
+      padding:18px;
+      box-shadow: 0 12px 36px rgba(25,10,45,.08);
+    }
+    .specsPanelHead{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:flex-start;
+      margin-bottom:12px;
+    }
+    .specsTitle{margin:0; font-size:20px; letter-spacing:-.01em;}
+    .specsNote{margin:6px 0 0; color:var(--muted); font-size:13px; line-height:1.55; max-width:78ch;}
+    .specsGrid{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:10px 14px;
+      margin-top:12px;
+    }
+    .specItem{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid rgba(42,31,58,.10);
+      background: rgba(255,255,255,.55);
+    }
+    .specK{
+      font-weight:900;
+      font-size:13px;
+      min-width:170px;
+      color:rgba(42,31,58,.85);
+    }
+    .specV{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+    .specCtas{display:flex; gap:12px; flex-wrap:wrap; margin-top:2px;}
+
+    /* Collapsible behavior */
+    .specsCollapsible{
+      display:grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows .22s ease;
+    }
+    .specsCollapsible > div{overflow:hidden;}
+    .specsCollapsible.open{grid-template-rows: 1fr;}
+
     /* Contact */
     .contactBox{display:grid; grid-template-columns:1fr; gap:14px; align-items:stretch;}
     .contactCard{
@@ -211,7 +298,6 @@
       padding:18px;
       box-shadow: 0 12px 36px rgba(25,10,45,.08);
     }
-    .contactCard a{font-weight:600; color:rgba(109,60,255,.95);}
     .contactInline{
       margin-top:12px;
       color:var(--muted);
@@ -219,43 +305,21 @@
       line-height:1.6;
     }
 
-.contactIcons{
-  display:flex;
-  gap:14px;
-  align-items:center;
-}
-
-.contactIcons a{
-  width:36px;
-  height:36px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
-  background:rgba(109,60,255,.08);
-  border:1px solid rgba(109,60,255,.18);
-  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
-}
-
-.contactIcons a:hover{
-  background:rgba(109,60,255,.18);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(25,10,45,.12);
-}
-
-.contactIcons svg{
-  width:18px;
-  height:18px;
-  fill:rgba(42,31,58,.9);
-}
-
-
-    .contactInline a{
-      font-weight:600;
-      color:rgba(109,60,255,.95);
-      text-decoration:underline;
-      text-underline-offset:3px;
+    .contactIcons{display:flex;gap:14px;align-items:center;}
+    .contactIcons a{
+      width:36px;height:36px;
+      display:inline-flex;align-items:center;justify-content:center;
+      border-radius:50%;
+      background:rgba(109,60,255,.08);
+      border:1px solid rgba(109,60,255,.18);
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
     }
+    .contactIcons a:hover{
+      background:rgba(109,60,255,.18);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(25,10,45,.12);
+    }
+    .contactIcons svg{width:18px;height:18px;fill:rgba(42,31,58,.9);}
 
     footer{padding:26px 0 40px; color:rgba(42,31,58,.65); font-size:13px;}
 
@@ -302,110 +366,71 @@
       .cards{grid-template-columns:1fr;}
       .mosaic{min-height:auto}
       .langSwitch{min-width:auto}
+      .specsGrid{grid-template-columns:1fr;}
+      .specK{min-width:130px;}
     }
 
+    nav a{padding:8px 6px;font-size:14px;}
+    .langSwitch{min-width:auto;order:2;}
 
-  nav a{
-    padding:8px 6px;
-    font-size:14px;
-  }
+    .menuToggle{
+      display:none;
+      background:none;
+      border:none;
+      font-size:26px;
+      cursor:pointer;
+      color:var(--ink);
+    }
 
-  .langSwitch{
-    min-width:auto;
-    order:2;
-  }
-}
-.menuToggle{
-  display:none;
-  background:none;
-  border:none;
-  font-size:28px;
-  cursor:pointer;
-  color:var(--ink);
-}
+    /* ===== MOBILE HEADER ===== */
+    @media (max-width: 768px){
+      .menuToggle{display:block;}
 
-/* ===== MOBILE MENU ===== */
-@media (max-width: 768px){
+      nav{
+        display:none;
+        position:absolute;
+        top:100%;
+        left:0;
+        width:100%;
+        flex-direction:column;
+        background:rgba(251,247,251,.97);
+        border-top:1px solid rgba(42,31,58,.08);
+        padding:10px 0;
+      }
+      nav.open{display:flex;}
+      nav a{padding:12px 20px;font-size:16px;}
+      .brand img{width:150px;}
+      .langSwitch{min-width:auto;}
+      .topbar{position:relative;}
+    }
 
-  .menuToggle{
-    display:block;
-  }
-
-  nav{
-    display:none;
-    width:100%;
-    flex-direction:column;
-    background:rgba(251,247,251,.95);
-    border-top:1px solid rgba(42,31,58,.08);
-    padding:10px 0;
-  }
-
-  nav a{
-    padding:12px 20px;
-    font-size:16px;
-  }
-
-  nav.open{
-    display:flex;
-  }
-
-  .brand img{
-    width:150px;
-  }
-
-  .langSwitch{
-    min-width:auto;
-  }
-}
-.menuToggle{
-  display:none;
-  background:none;
-  border:none;
-  font-size:26px;
-  cursor:pointer;
-  color:var(--ink);
+/* ===== FLOATING WHATSAPP BUTTON (NEW) ===== */
+.waFloat{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#25D366;
+  box-shadow: 0 16px 40px rgba(25,10,45,.22);
+  border:1px solid rgba(0,0,0,.08);
+  z-index:999;
 }
 
-/* ===== MOBILE HEADER ===== */
-@media (max-width: 768px){
-
-  .menuToggle{
-    display:block;
-  }
-
-  nav{
-    display:none;
-    position:absolute;
-    top:100%;
-    left:0;
-    width:100%;
-    flex-direction:column;
-    background:rgba(251,247,251,.97);
-    border-top:1px solid rgba(42,31,58,.08);
-    padding:10px 0;
-  }
-
-  nav.open{
-    display:flex;
-  }
-
-  nav a{
-    padding:12px 20px;
-    font-size:16px;
-  }
-
-  .brand img{
-    width:150px;
-  }
-
-  .langSwitch{
-    min-width:auto;
-  }
-
-  .topbar{
-    position:relative;
-  }
+.waFloat svg{
+  width:28px;
+  height:28px;
+  fill:#fff;
+  display:block;
 }
+
+    @media (max-width: 768px){
+      .waFloatLabel{display:none;}
+    }
 
   </style>
 </head>
@@ -427,46 +452,45 @@
       <a href="#contact" data-i18n="nav_contact">Contato</a>
     </nav>
 
-<div class="langSwitch" aria-label="Language selector">
-  <button class="langBtn" id="btnPT" type="button" aria-pressed="true" title="Português (Brasil)">
-    <svg class="flagIcon" viewBox="0 0 64 64" aria-hidden="true">
-      <defs><clipPath id="cBR"><circle cx="32" cy="32" r="32"/></clipPath></defs>
-      <g clip-path="url(#cBR)">
-        <rect width="64" height="64" fill="#1aa34a"/>
-        <polygon points="32,10 56,32 32,54 8,32" fill="#ffd34d"/>
-        <circle cx="32" cy="32" r="12.5" fill="#1f4fbf"/>
-        <path d="M18 30c7 6 21 6 28 0" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round"/>
-      </g>
-    </svg>
-    <span class="langLabel">PT</span>
-  </button>
+    <div class="langSwitch" aria-label="Language selector">
+      <button class="langBtn" id="btnPT" type="button" aria-pressed="true" title="Português (Brasil)">
+        <svg class="flagIcon" viewBox="0 0 64 64" aria-hidden="true">
+          <defs><clipPath id="cBR"><circle cx="32" cy="32" r="32"/></clipPath></defs>
+          <g clip-path="url(#cBR)">
+            <rect width="64" height="64" fill="#1aa34a"/>
+            <polygon points="32,10 56,32 32,54 8,32" fill="#ffd34d"/>
+            <circle cx="32" cy="32" r="12.5" fill="#1f4fbf"/>
+            <path d="M18 30c7 6 21 6 28 0" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <span class="langLabel">PT</span>
+      </button>
 
-  <button class="langBtn" id="btnEN" type="button" aria-pressed="false" title="English (US)">
-    <svg class="flagIcon" viewBox="0 0 64 64" aria-hidden="true">
-      <defs><clipPath id="cUS"><circle cx="32" cy="32" r="32"/></clipPath></defs>
-      <g clip-path="url(#cUS)">
-        <rect width="64" height="64" fill="#ffffff"/>
-        <g fill="#d22f2f">
-          <rect x="0" y="0" width="64" height="6"/>
-          <rect x="0" y="12" width="64" height="6"/>
-          <rect x="0" y="24" width="64" height="6"/>
-          <rect x="0" y="36" width="64" height="6"/>
-          <rect x="0" y="48" width="64" height="6"/>
-          <rect x="0" y="60" width="64" height="6"/>
-        </g>
-        <rect x="0" y="0" width="30" height="22" fill="#1f4fbf"/>
-        <g fill="#ffffff" opacity="0.95">
-          <circle cx="5" cy="4" r="1.1"/><circle cx="11" cy="4" r="1.1"/><circle cx="17" cy="4" r="1.1"/><circle cx="23" cy="4" r="1.1"/>
-          <circle cx="8" cy="8" r="1.1"/><circle cx="14" cy="8" r="1.1"/><circle cx="20" cy="8" r="1.1"/><circle cx="26" cy="8" r="1.1"/>
-          <circle cx="5" cy="12" r="1.1"/><circle cx="11" cy="12" r="1.1"/><circle cx="17" cy="12" r="1.1"/><circle cx="23" cy="12" r="1.1"/>
-          <circle cx="8" cy="16" r="1.1"/><circle cx="14" cy="16" r="1.1"/><circle cx="20" cy="16" r="1.1"/><circle cx="26" cy="16" r="1.1"/>
-        </g>
-      </g>
-    </svg>
-    <span class="langLabel">EN</span>
-  </button>
-</div>
-
+      <button class="langBtn" id="btnEN" type="button" aria-pressed="false" title="English (US)">
+        <svg class="flagIcon" viewBox="0 0 64 64" aria-hidden="true">
+          <defs><clipPath id="cUS"><circle cx="32" cy="32" r="32"/></clipPath></defs>
+          <g clip-path="url(#cUS)">
+            <rect width="64" height="64" fill="#ffffff"/>
+            <g fill="#d22f2f">
+              <rect x="0" y="0" width="64" height="6"/>
+              <rect x="0" y="12" width="64" height="6"/>
+              <rect x="0" y="24" width="64" height="6"/>
+              <rect x="0" y="36" width="64" height="6"/>
+              <rect x="0" y="48" width="64" height="6"/>
+              <rect x="0" y="60" width="64" height="6"/>
+            </g>
+            <rect x="0" y="0" width="30" height="22" fill="#1f4fbf"/>
+            <g fill="#ffffff" opacity="0.95">
+              <circle cx="5" cy="4" r="1.1"/><circle cx="11" cy="4" r="1.1"/><circle cx="17" cy="4" r="1.1"/><circle cx="23" cy="4" r="1.1"/>
+              <circle cx="8" cy="8" r="1.1"/><circle cx="14" cy="8" r="1.1"/><circle cx="20" cy="8" r="1.1"/><circle cx="26" cy="8" r="1.1"/>
+              <circle cx="5" cy="12" r="1.1"/><circle cx="11" cy="12" r="1.1"/><circle cx="17" cy="12" r="1.1"/><circle cx="23" cy="12" r="1.1"/>
+              <circle cx="8" cy="16" r="1.1"/><circle cx="14" cy="16" r="1.1"/><circle cx="20" cy="16" r="1.1"/><circle cx="26" cy="16" r="1.1"/>
+            </g>
+          </g>
+        </svg>
+        <span class="langLabel">EN</span>
+      </button>
+    </div>
 
   </div>
 </header>
@@ -484,7 +508,7 @@
       </p>
 
       <div class="ctaRow">
-        <a class="btn btnPrimary" href="#about" data-i18n="btn_more">Saiba mais ↗</a>
+        <a class="btn btnPrimary" href="#services" data-open-specs="true" data-i18n="btn_specs">Ver especificações ↗</a>
         <a class="btn btnGhost" href="#contact" data-i18n="btn_quote">Solicitar cotação</a>
       </div>
     </div>
@@ -533,10 +557,17 @@
     </p>
 
     <div class="cards">
-      <div class="card">
+      <div class="card" id="opticalCard">
         <div class="tag" data-i18n="tag_instrumentation">Instrumentação</div>
         <h3 data-i18n="svc1_title">Sistemas ópticos</h3>
         <p data-i18n="svc1_desc">Hardware para captura da oculomotricidade com módulos de sincronização.</p>
+
+        <!-- NEW: plus button that opens specs -->
+        <button class="plusBtn" id="specsToggle"
+          type="button"
+          aria-label="Abrir especificações do rastreador ocular"
+          aria-controls="specsPanel"
+          aria-expanded="false">+</button>
       </div>
 
       <div class="card">
@@ -549,6 +580,80 @@
         <div class="tag" data-i18n="tag_rd">P&D</div>
         <h3 data-i18n="svc3_title">Soluções assistivas e lúdicas</h3>
         <p data-i18n="svc3_desc">Linha em desenvolvimento voltada a autonomia e participação de crianças com demandas do neurodesenvolvimento.</p>
+      </div>
+    </div>
+
+    <!-- NEW: collapsible specs panel (opens via + button) -->
+    <div class="specsCollapsible" id="specsCollapsible" aria-live="polite">
+      <div>
+        <div class="specsPanel" id="specsPanel">
+          <div class="specsPanelHead">
+            <div>
+              <h3 class="specsTitle" data-i18n="specs_title">Rastreador ocular</h3>
+              <p class="specsNote" data-i18n="specs_note">
+                Sistema tipo óculos/headset com software incluso. Especificações podem variar conforme demanda.
+              </p>
+            </div>
+
+            <div class="specCtas">
+              <a class="btn btnPrimary" href="#contact" data-i18n="specs_cta1">Quero cotar ↗</a>
+            </div>
+          </div>
+
+          <div class="specsGrid">
+            <div class="specItem">
+              <div class="specK" data-i18n="spec_k1">Amostragem</div>
+              <div class="specV" data-i18n="spec_v1">120 Hz</div>
+            </div>
+
+            <div class="specItem">
+              <div class="specK" data-i18n="spec_k2">Câmera de cena</div>
+              <div class="specV" data-i18n="spec_v2">720p (1280×720), 110° (POV)</div>
+            </div>
+
+            <div class="specItem">
+              <div class="specK" data-i18n="spec_k3">Calibração</div>
+              <div class="specV" data-i18n="spec_v3">Ponto único e multipontos</div>
+            </div>
+
+            <div class="specItem">
+              <div class="specK" data-i18n="spec_k4">Uso externo</div>
+              <div class="specV" data-i18n="spec_v4">Sim</div>
+            </div>
+
+            <div class="specItem">
+              <div class="specK" data-i18n="spec_k5">Dados brutos</div>
+              <div class="specV" data-i18n="spec_v5">Raw data disponível (exportação e análise)</div>
+            </div>
+
+            <div class="specItem">
+              <div class="specK" data-i18n="spec_k6">Métricas (120 Hz)</div>
+              <div class="specV" data-i18n="spec_v6">Diâmetro pupilar (px e mm), gaze raw, fixações, sacadas e piscadas</div>
+            </div>
+
+            <div class="specItem">
+              <div class="specK" data-i18n="spec_k7">Gaze integrado (POV)</div>
+              <div class="specV" data-i18n="spec_v7">Sim</div>
+            </div>
+
+            <div class="specItem">
+              <div class="specK" data-i18n="spec_k8">Head pose</div>
+              <div class="specV" data-i18n="spec_v8">9 DoF</div>
+            </div>
+
+            <div class="specItem">
+              <div class="specK" data-i18n="spec_k9">Sincronização</div>
+              <div class="specV" data-i18n="spec_v9">Disponível</div>
+            </div>
+
+            <div class="specItem">
+              <div class="specK" data-i18n="spec_k10">Software</div>
+              <div class="specV" data-i18n="spec_v10">Software de análise incluso</div>
+            </div>
+          </div>
+
+
+        </div>
       </div>
     </div>
 
@@ -591,19 +696,19 @@
           </div>
         </form>
 
-<div class="contactInline contactIcons">
-  <a href="mailto:contact@amsbrazil.com" aria-label="Enviar e-mail">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M2 6.5C2 5.12 3.12 4 4.5 4h15C20.88 4 22 5.12 22 6.5v11c0 1.38-1.12 2.5-2.5 2.5h-15C3.12 20 2 18.88 2 17.5v-11Zm2.2-.3L12 11.2l7.8-5H4.2Zm15.3 1.9-7.1 4.5a.9.9 0 0 1-1 0L4.3 8.1V17.5c0 .28.22.5.5.5h15a.5.5 0 0 0 .5-.5V8.1Z"/>
-    </svg>
-  </a>
+        <div class="contactInline contactIcons">
+          <a href="mailto:contact@amsbrazil.com" aria-label="Enviar e-mail">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M2 6.5C2 5.12 3.12 4 4.5 4h15C20.88 4 22 5.12 22 6.5v11c0 1.38-1.12 2.5-2.5 2.5h-15C3.12 20 2 18.88 2 17.5v-11Zm2.2-.3L12 11.2l7.8-5H4.2Zm15.3 1.9-7.1 4.5a.9.9 0 0 1-1 0L4.3 8.1V17.5c0 .28.22.5.5.5h15a.5.5 0 0 0 .5-.5V8.1Z"/>
+            </svg>
+          </a>
 
-  <a href="https://wa.me/553184594302" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M20.52 3.48A11.94 11.94 0 0 0 12 0C5.38 0 0 5.38 0 12c0 2.11.55 4.17 1.6 6L0 24l6.18-1.62A11.96 11.96 0 0 0 12 24c6.62 0 12-5.38 12-12 0-3.19-1.24-6.19-3.48-8.52Zm-8.52 18a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.66.96.98-3.57-.24-.37A9.9 9.9 0 1 1 12 21.48Zm5.43-7.35c-.3-.15-1.77-.87-2.05-.97-.28-.1-.48-.15-.68.15-.2.3-.78.97-.96 1.17-.18.2-.36.22-.66.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.68-2.08-.18-.3-.02-.46.13-.61.14-.14.3-.36.45-.54.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.68-1.64-.93-2.25-.24-.57-.48-.49-.68-.5h-.58c-.2 0-.52.07-.8.37-.28.3-1.05 1.03-1.05 2.52s1.08 2.93 1.23 3.13c.15.2 2.12 3.23 5.13 4.53.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.07-.12-.27-.2-.57-.35Z"/>
-    </svg>
-  </a>
-</div>
+          <a href="https://wa.me/553184594302" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.52 3.48A11.94 11.94 0 0 0 12 0C5.38 0 0 5.38 0 12c0 2.11.55 4.17 1.6 6L0 24l6.18-1.62A11.96 11.96 0 0 0 12 24c6.62 0 12-5.38 12-12 0-3.19-1.24-6.19-3.48-8.52Zm-8.52 18a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.66.96.98-3.57-.24-.37A9.9 9.9 0 1 1 12 21.48Zm5.43-7.35c-.3-.15-1.77-.87-2.05-.97-.28-.1-.48-.15-.68.15-.2.3-.78.97-.96 1.17-.18.2-.36.22-.66.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.68-2.08-.18-.3-.02-.46.13-.61.14-.14.3-.36.45-.54.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.68-1.64-.93-2.25-.24-.57-.48-.49-.68-.5h-.58c-.2 0-.52.07-.8.37-.28.3-1.05 1.03-1.05 2.52s1.08 2.93 1.23 3.13c.15.2 2.12 3.23 5.13 4.53.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.07-.12-.27-.2-.57-.35Z"/>
+            </svg>
+          </a>
+        </div>
 
       </div>
     </div>
@@ -616,6 +721,14 @@
   </div>
 </footer>
 
+<!-- ===== NEW: Floating WhatsApp button ===== -->
+<a class="waFloat" href="https://wa.me/553184594302" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M20.52 3.48A11.94 11.94 0 0 0 12 0C5.38 0 0 5.38 0 12c0 2.11.55 4.17 1.6 6L0 24l6.18-1.62A11.96 11.96 0 0 0 12 24c6.62 0 12-5.38 12-12 0-3.19-1.24-6.19-3.48-8.52Zm-8.52 18a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.66.96.98-3.57-.24-.37A9.9 9.9 0 1 1 12 21.48Zm5.43-7.35c-.3-.15-1.77-.87-2.05-.97-.28-.1-.48-.15-.68.15-.2.3-.78.97-.96 1.17-.18.2-.36.22-.66.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.68-2.08-.18-.3-.02-.46.13-.61.14-.14.3-.36.45-.54.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.68-1.64-.93-2.25-.24-.57-.48-.49-.68-.5h-.58c-.2 0-.52.07-.8.37-.28.3-1.05 1.03-1.05 2.52s1.08 2.93 1.23 3.13c.15.2 2.12 3.23 5.13 4.53.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.07-.12-.27-.2-.57-.35Z"/>
+  </svg>
+</a>
+
+
 <script>
   document.getElementById("y").textContent = new Date().getFullYear();
 </script>
@@ -625,9 +738,13 @@
   const dict = {
     pt: {
       nav_home:"Início", nav_about:"Sobre", nav_services:"Serviços", nav_contact:"Contato",
+
       hero_h1:"Tecnologia voltada ao comportamento humano",
       hero_lead:"Desenvolvemos instrumentação e softwares aplicados à análise do movimento humano. Também conduzimos P&D de soluções assistivas/lúdicas voltadas ao neurodesenvolvimento.",
-      btn_more:"Saiba mais ↗", btn_quote:"Solicitar cotação", btn_send:"Enviar ↗",
+
+      btn_specs:"Ver especificações ↗",
+      btn_quote:"Solicitar cotação",
+      btn_send:"Enviar ↗",
 
       pic_integration:"Integração de sinais", pic_optical:"Rastreamento ocular", pic_processing:"Processamento de sinais",
 
@@ -642,9 +759,32 @@
       svc2_title:"Analytics de movimento humano", svc2_desc:"Ferramentas e módulos de análise para dados motores, integração e relatórios sob demanda.",
       svc3_title:"Soluções assistivas e lúdicas", svc3_desc:"Linha em desenvolvimento voltada a autonomia e participação de crianças com demandas do neurodesenvolvimento.",
 
-      contact_title:"Contato", contact_msg_title:"Mensagem",
-      contact_inline:"Prefere e-mail? Escreva para",
+      specs_title:"Rastreador ocular",
+      specs_note:"Sistema tipo óculos/headset com software incluso. Especificações podem variar conforme demanda.",
+      specs_cta1:"Quero cotar ↗",
 
+      spec_k1:"Amostragem",
+      spec_v1:"120 Hz",
+      spec_k2:"Câmera de cena",
+      spec_v2:"720p (1280×720), 110° (POV)",
+      spec_k3:"Calibração",
+      spec_v3:"Ponto único e multipontos",
+      spec_k4:"Uso externo",
+      spec_v4:"Sim",
+      spec_k5:"Dados brutos",
+      spec_v5:"Disponível",
+      spec_k6:"Métricas (120 Hz)",
+      spec_v6:"Diâmetro pupilar (px e mm), gaze raw, fixações, sacadas e piscadas",
+      spec_k7:"Gaze integrado (POV)",
+      spec_v7:"Sim",
+      spec_k8:"Head pose",
+      spec_v8:"9 DoF",
+      spec_k9:"Sincronização",
+      spec_v9:"Disponível",
+      spec_k10:"Software",
+      spec_v10:"Incluso",
+
+      contact_title:"Contato", contact_msg_title:"Mensagem",
       ph_name:"Seu nome", ph_email:"Seu e-mail", ph_subject:"Assunto (ex.: cotação, parceria, dúvida)", ph_message:"Fale com a AMS",
 
       sending:"Enviando...",
@@ -657,9 +797,13 @@
 
     en: {
       nav_home:"Home", nav_about:"About", nav_services:"Services", nav_contact:"Contact",
+
       hero_h1:"Technology for human behavior measurement",
       hero_lead:"We develop instrumentation and software for human-movement analysis. We also conduct R&D on assistive and playful solutions focused on neurodevelopment.",
-      btn_more:"Learn more ↗", btn_quote:"Request a quote", btn_send:"Send ↗",
+
+      btn_specs:"View specifications ↗",
+      btn_quote:"Request a quote",
+      btn_send:"Send ↗",
 
       pic_integration:"Signal integration", pic_optical:"Eye-tracking", pic_processing:"Signal processing",
 
@@ -674,9 +818,32 @@
       svc2_title:"Human-movement analytics", svc2_desc:"Tools and modules for motor-data analysis, integrations, and on-demand reporting.",
       svc3_title:"Assistive & playful solutions", svc3_desc:"A development line focused on autonomy and participation for children with neurodevelopment-related needs.",
 
-      contact_title:"Contact", contact_msg_title:"Message",
-      contact_inline:"Prefer email? Write to",
+      specs_title:"Eye tracker",
+      specs_note:"Glasses/headset form factor with analysis software included. Specifications may vary by demand.",
+      specs_cta1:"Request a quote ↗",
 
+      spec_k1:"Sampling (eye)",
+      spec_v1:"120 Hz (eye cameras).",
+      spec_k2:"Scene camera",
+      spec_v2:"720p (1280×720), 110° (POV).",
+      spec_k3:"Calibration",
+      spec_v3:"Single-point and multi-point.",
+      spec_k4:"Outdoor",
+      spec_v4:"Yes.",
+      spec_k5:"Raw data",
+      spec_v5:"Raw data available (export & analysis).",
+      spec_k6:"Metrics (120 Hz)",
+      spec_v6:"Pupil diameter (px & mm), raw gaze, fixations, saccades, and blinks.",
+      spec_k7:"Gaze integrated into POV video",
+      spec_v7:"Yes.",
+      spec_k8:"Head pose",
+      spec_v8:"9 DoF.",
+      spec_k9:"Sync",
+      spec_v9:"External synchronization available.",
+      spec_k10:"Software",
+      spec_v10:"Analysis software included.",
+
+      contact_title:"Contact", contact_msg_title:"Message",
       ph_name:"Your name", ph_email:"Your email", ph_subject:"Subject (e.g., quote, partnership, question)", ph_message:"Write to AMS",
 
       sending:"Sending...",
@@ -770,6 +937,7 @@
   });
 })();
 </script>
+
 <script>
 (function(){
   const btn = document.querySelector(".menuToggle");
@@ -779,6 +947,50 @@
   btn.addEventListener("click", ()=>{
     const open = nav.classList.toggle("open");
     btn.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+})();
+</script>
+
+<script>
+/* ===== NEW: Specs toggle logic ===== */
+(function(){
+  const toggle = document.getElementById("specsToggle");
+  const collapsible = document.getElementById("specsCollapsible");
+  const services = document.getElementById("services");
+  if(!toggle || !collapsible || !services) return;
+
+  function openSpecs(){
+    collapsible.classList.add("open");
+    toggle.setAttribute("aria-expanded","true");
+    toggle.textContent = "×";
+  }
+
+  function closeSpecs(){
+    collapsible.classList.remove("open");
+    toggle.setAttribute("aria-expanded","false");
+    toggle.textContent = "+";
+  }
+
+  function toggleSpecs(){
+    const isOpen = collapsible.classList.contains("open");
+    if(isOpen) closeSpecs(); else openSpecs();
+  }
+
+  toggle.addEventListener("click", toggleSpecs);
+
+  // If user clicks "Ver especificações" in hero, open panel when arriving at Services
+  document.querySelectorAll('[data-open-specs="true"]').forEach(a=>{
+    a.addEventListener("click", ()=>{
+      // let anchor scroll first, then open
+      setTimeout(()=>{ openSpecs(); }, 260);
+    });
+  });
+
+  // Optional: close on ESC for convenience
+  document.addEventListener("keydown",(e)=>{
+    if(e.key === "Escape" && collapsible.classList.contains("open")){
+      closeSpecs();
+    }
   });
 })();
 </script>
