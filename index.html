@@ -951,18 +951,36 @@
 })();
 </script>
 
-<script>
 /* ===== NEW: Specs toggle logic ===== */
+
+<script>
+/* ===== Specs toggle logic (mobile-friendly scroll) ===== */
 (function(){
   const toggle = document.getElementById("specsToggle");
   const collapsible = document.getElementById("specsCollapsible");
-  const services = document.getElementById("services");
-  if(!toggle || !collapsible || !services) return;
+  const panel = document.getElementById("specsPanel");
+  if(!toggle || !collapsible || !panel) return;
 
-  function openSpecs(){
+  const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
+
+  function scrollToPanel(){
+    // dá um tempo pro layout “abrir” e calcular a altura correta
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        panel.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  }
+
+  function openSpecs(fromUserClick){
     collapsible.classList.add("open");
     toggle.setAttribute("aria-expanded","true");
     toggle.textContent = "×";
+
+    // no celular, leva a pessoa até a caixa
+    if(fromUserClick && isMobile()){
+      scrollToPanel();
+    }
   }
 
   function closeSpecs(){
@@ -972,21 +990,23 @@
   }
 
   function toggleSpecs(){
-    const isOpen = collapsible.classList.contains("open");
-    if(isOpen) closeSpecs(); else openSpecs();
+    const open = collapsible.classList.contains("open");
+    if(open) closeSpecs();
+    else openSpecs(true);
   }
 
-  toggle.addEventListener("click", toggleSpecs);
+  toggle.addEventListener("click", (e)=>{
+    e.preventDefault();
+    toggleSpecs();
+  });
 
-  // If user clicks "Ver especificações" in hero, open panel when arriving at Services
+  // Botão "Ver especificações" no hero: abre e também rola no mobile
   document.querySelectorAll('[data-open-specs="true"]').forEach(a=>{
     a.addEventListener("click", ()=>{
-      // let anchor scroll first, then open
-      setTimeout(()=>{ openSpecs(); }, 260);
+      setTimeout(()=>{ openSpecs(true); }, 260);
     });
   });
 
-  // Optional: close on ESC for convenience
   document.addEventListener("keydown",(e)=>{
     if(e.key === "Escape" && collapsible.classList.contains("open")){
       closeSpecs();
