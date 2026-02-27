@@ -20,6 +20,20 @@
     }
     *{box-sizing:border-box}
     body{
+/* ===== FIX: anchor offset for sticky header ===== */
+html{scroll-behavior:smooth;}
+:root{--headerOffset:84px;} /* ajuste fino se quiser */
+
+main[id], section[id]{
+  scroll-margin-top: var(--headerOffset);
+}
+
+/* no mobile o header costuma ficar mais alto (logo + botões) */
+@media (max-width: 768px){
+  :root{--headerOffset:110px;}
+}
+
+
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color:var(--ink);
@@ -948,9 +962,24 @@ hero_lead:"Desenvolvemos sistemas de captura e análise de dados aplicados à co
   const nav = document.getElementById("mainNav");
   if(!btn || !nav) return;
 
+  function closeMenu(){
+    nav.classList.remove("open");
+    btn.setAttribute("aria-expanded","false");
+  }
+
   btn.addEventListener("click", ()=>{
     const open = nav.classList.toggle("open");
     btn.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+
+  /* Fecha ao clicar em qualquer link do menu */
+  nav.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener("click", ()=> closeMenu());
+  });
+
+  /* Fecha se a pessoa girar o celular / mudar tamanho */
+  window.addEventListener("resize", ()=>{
+    if(window.matchMedia("(min-width: 769px)").matches) closeMenu();
   });
 })();
 </script>
