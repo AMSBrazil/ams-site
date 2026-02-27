@@ -13,12 +13,22 @@
       --muted:#5a4c6a;
       --accent:#ff6aa7;
       --accent2:#6d3cff;
+      --headerH: 76px;
       --card:#ffffff;
       --shadow:0 18px 55px rgba(25,10,45,.12);
       --radius:22px;
       --max:1120px;
     }
     *{box-sizing:border-box}
+    html{
+  scroll-behavior:smooth;
+  scroll-padding-top: var(--headerH);
+}
+
+/* Garante que cada âncora pare abaixo do header */
+section, main[id]{
+  scroll-margin-top: calc(var(--headerH) + 12px);
+}
     body{
 /* ===== FIX: anchor offset for sticky header ===== */
 html{scroll-behavior:smooth;}
@@ -30,6 +40,7 @@ main[id], section[id]{
 
 /* no mobile o header costuma ficar mais alto (logo + botões) */
 @media (max-width: 768px){
+  box-shadow: 0 18px 55px rgba(25,10,45,.10);
   :root{--headerOffset:110px;}
 }
 
@@ -68,6 +79,7 @@ main[id], section[id]{
     }
 
     nav{
+      box-shadow: 0 18px 55px rgba(25,10,45,.10);
       display:flex; gap:22px; flex-wrap:wrap;
       justify-content:center;
     }
@@ -960,26 +972,33 @@ hero_lead:"Desenvolvemos sistemas de captura e análise de dados aplicados à co
 (function(){
   const btn = document.querySelector(".menuToggle");
   const nav = document.getElementById("mainNav");
-  if(!btn || !nav) return;
+  const header = document.querySelector("header");
+  if(!btn || !nav || !header) return;
 
-  function closeMenu(){
-    nav.classList.remove("open");
-    btn.setAttribute("aria-expanded","false");
+  function setHeaderH(){
+    const h = header.getBoundingClientRect().height;
+    document.documentElement.style.setProperty("--headerH", `${Math.ceil(h)}px`);
   }
+
+  // mede na carga e quando a janela muda (resize/orientation)
+  setHeaderH();
+  window.addEventListener("resize", setHeaderH, {passive:true});
+  window.addEventListener("orientationchange", ()=>setTimeout(setHeaderH, 50), {passive:true});
 
   btn.addEventListener("click", ()=>{
     const open = nav.classList.toggle("open");
     btn.setAttribute("aria-expanded", open ? "true" : "false");
+    // quando abrir/fechar, a altura pode mudar um pouco
+    setTimeout(setHeaderH, 0);
   });
 
-  /* Fecha ao clicar em qualquer link do menu */
+  // FECHA o menu ao clicar em um link (mobile)
   nav.querySelectorAll('a[href^="#"]').forEach(a=>{
-    a.addEventListener("click", ()=> closeMenu());
-  });
-
-  /* Fecha se a pessoa girar o celular / mudar tamanho */
-  window.addEventListener("resize", ()=>{
-    if(window.matchMedia("(min-width: 769px)").matches) closeMenu();
+    a.addEventListener("click", ()=>{
+      nav.classList.remove("open");
+      btn.setAttribute("aria-expanded","false");
+      setTimeout(setHeaderH, 0);
+    });
   });
 })();
 </script>
