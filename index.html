@@ -4,520 +4,192 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>AMS | Adaptive Motion Solutions</title>
-  <meta name="description" content="Soluções aplicadas ao comportamento motor" />
+  <meta name="description" content="Soluções aplicadas ao comportamento motor, rastreamento ocular e análise do movimento humano." />
   <style>
-
     :root{
-      --bg:#fbf7fb;
-      --ink:#2a1f3a;
-      --muted:#5a4c6a;
-      --accent:#ff6aa7;
-      --accent2:#6d3cff;
-      --headerH: 76px;
+      --bg:#f5f5f3;
+      --ink:#151515;
+      --muted:#5f5f5f;
+      --accent:#6f6f6f;
+      --accent2:#111111;
+      --headerH:76px;
       --card:#ffffff;
-      --shadow:0 18px 55px rgba(25,10,45,.12);
-      --radius:22px;
+      --shadow:0 18px 45px rgba(0,0,0,.10);
+      --radius:18px;
       --max:1120px;
     }
     *{box-sizing:border-box}
     html{
-  scroll-behavior:smooth;
-  scroll-padding-top: var(--headerH);
-}
-
-/* Garante que cada âncora pare abaixo do header */
-section, main[id]{
-  scroll-margin-top: calc(var(--headerH) + 12px);
-}
+      scroll-behavior:smooth;
+      scroll-padding-top:var(--headerH);
+    }
     body{
-/* ===== FIX: anchor offset for sticky header ===== */
-html{scroll-behavior:smooth;}
-:root{--headerOffset:84px;} /* ajuste fino se quiser */
-
-main[id], section[id]{
-  scroll-margin-top: var(--headerOffset);
-}
-
-/* no mobile o header costuma ficar mais alto (logo + botões) */
-@media (max-width: 768px){
-  box-shadow: 0 18px 55px rgba(25,10,45,.10);
-  :root{--headerOffset:110px;}
-}
-
-
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
       color:var(--ink);
-      background: radial-gradient(1200px 500px at 70% 20%, rgba(255,106,167,.09), transparent 55%),
-                  radial-gradient(900px 500px at 20% 70%, rgba(109,60,255,.07), transparent 55%),
-                  var(--bg);
+      background:linear-gradient(180deg,#ffffff 0%,#f6f6f4 42%,#ededeb 100%);
     }
     a{color:inherit;text-decoration:none}
-    .wrap{max-width:var(--max); margin:0 auto; padding:0 20px;}
+    section,main[id]{scroll-margin-top:calc(var(--headerH) + 14px)}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+
     header{
-      position:sticky; top:0; z-index:50;
-      background:rgba(251,247,251,.75);
-      backdrop-filter: blur(10px);
-      border-bottom:1px solid rgba(42,31,58,.06);
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(0,0,0,.08);
     }
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0;
-      gap:14px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:12px; min-width:240px;
-    }
-    .brand img{
-      width:210px;
-      height:auto;
-      display:block;
-      background:transparent;
-      border-radius:0;
-      padding:0;
-      box-shadow:none;
-    }
+    .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:14px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:240px}
+    .brand img{width:210px;height:auto;display:block;background:transparent;border-radius:0;padding:0;box-shadow:none}
+    nav{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+    nav a{font-weight:650;color:rgba(0,0,0,.72);padding:10px 10px;border-radius:8px;font-size:14px}
+    nav a:hover{background:rgba(0,0,0,.06);color:#111}
+    .langSwitch{display:flex;align-items:center;gap:8px;justify-content:flex-end;min-width:210px}
+    .langBtn{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.88);border:1px solid rgba(0,0,0,.14);color:rgba(0,0,0,.82);font-size:13px;font-weight:650;cursor:pointer;user-select:none}
+    .langBtn:hover{background:rgba(0,0,0,.06)}
+    .langBtn[aria-pressed="true"]{background:#111;color:#fff;border-color:#111;box-shadow:none}
+    .flagIcon{width:18px;height:18px;display:block;border-radius:50%;overflow:hidden}
+    .langLabel{font-weight:800;letter-spacing:.01em}
+    .menuToggle{display:none;background:none;border:none;font-size:26px;cursor:pointer;color:#111}
 
-    nav{
-      box-shadow: 0 18px 55px rgba(25,10,45,.10);
-      display:flex; gap:22px; flex-wrap:wrap;
-      justify-content:center;
-    }
-    nav a{
-      font-weight:600;
-      color:rgba(42,31,58,.72);
-      padding:10px 10px;
-      border-radius:12px;
-    }
-    nav a:hover{background:rgba(109,60,255,.07); color:var(--ink);}
+    .hero{padding:54px 0 22px}
+    .heroGrid{display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:center}
+    .kicker{color:var(--accent);font-weight:850;letter-spacing:.02em;margin-bottom:12px}
+    h1{font-size:clamp(34px,4.2vw,64px);line-height:1.04;margin:0 0 16px;letter-spacing:-.02em}
+    .lead{color:var(--muted);font-size:16px;line-height:1.65;max-width:56ch;margin:0 0 22px}
+    .ctaRow{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 20px;border-radius:6px;font-weight:850;border:1px solid transparent;box-shadow:none;transition:transform .15s ease,background .15s ease,border-color .15s ease,color .15s ease;cursor:pointer;user-select:none;white-space:nowrap}
+    .btn:hover{transform:translateY(-1px)}
+    .btnPrimary{background:#0b0b0b;color:#fff;border-color:#0b0b0b}
+    .btnPrimary:hover{background:#1d1d1d;border-color:#1d1d1d}
+    .btnGhost{background:transparent;border-color:rgba(0,0,0,.45);color:#111}
+    .btnGhost:hover{background:#111;color:#fff;border-color:#111}
+    .btnSoft{background:#fff;border-color:rgba(0,0,0,.18);color:#111}
+    .btnSoft:hover{border-color:#111}
 
-    /* HERO */
-    .hero{padding:54px 0 22px;}
-    .heroGrid{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:34px;
-      align-items:center;
-    }
-    .kicker{
-      color:rgba(109,60,255,.85);
-      font-weight:700;
-      letter-spacing:.02em;
-      margin-bottom:12px;
-    }
-    h1{
-      font-size: clamp(34px, 4.2vw, 64px);
-      line-height:1.04;
-      margin:0 0 16px;
-      letter-spacing:-.02em;
-    }
-    .lead{
-      color:var(--muted);
-      font-size:16px;
-      line-height:1.65;
-      max-width:54ch;
-      margin:0 0 22px;
-    }
-    .ctaRow{display:flex; gap:14px; flex-wrap:wrap; align-items:center;}
-    .btn{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:14px 18px;
-      border-radius:999px;
-      font-weight:800;
-      border:1px solid transparent;
-      box-shadow: 0 14px 40px rgba(25,10,45,.10);
-      transition: transform .15s ease, box-shadow .15s ease;
-      cursor:pointer;
-      user-select:none;
-    }
-    .btn:hover{transform: translateY(-1px); box-shadow: 0 18px 55px rgba(25,10,45,.14);}
-    .btnPrimary{
-      background: linear-gradient(135deg, var(--accent2), var(--accent));
-      color:white;
-    }
-    .btnGhost{
-      background: rgba(255,255,255,.75);
-      border-color: rgba(42,31,58,.14);
-      color: rgba(42,31,58,.9);
-    }
+    .mosaic{position:relative;background:transparent;min-height:420px}
+    .dots{position:absolute;inset:auto 6px 6px auto;width:150px;height:150px;background:radial-gradient(circle,rgba(255,106,167,.55) 1.6px,transparent 1.7px);background-size:12px 12px;border-radius:24px;opacity:.45;transform:translate(10px,-10px);pointer-events:none}
+    .tri1,.tri2{position:absolute;width:0;height:0;border-style:solid;opacity:.75;pointer-events:none}
+    .tri1{border-width:0 0 18px 18px;border-color:transparent transparent var(--accent2) transparent;left:18px;top:8px;transform:rotate(18deg)}
+    .tri2{border-width:16px 0 0 16px;border-color:transparent transparent transparent var(--accent);right:18px;bottom:16px;transform:rotate(-12deg)}
+    .gridPics{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:10px;background:rgba(255,255,255,.75);border:1px solid rgba(0,0,0,.08);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .pic{border-radius:14px;background:#e9e9e6;border:1px solid rgba(0,0,0,.08);overflow:hidden;min-height:140px;position:relative}
+    .pic img{width:100%;height:100%;object-fit:cover;display:block}
+    .picTall img{object-position:center center}
+    .picLabel{position:absolute;left:10px;bottom:10px;font-size:12px;font-weight:850;background:rgba(255,255,255,.86);border:1px solid rgba(0,0,0,.12);padding:6px 10px;border-radius:999px;color:#171717;backdrop-filter:blur(6px)}
+    .picTall{grid-row:span 2;min-height:294px}
 
-    /* Mosaic */
-    .mosaic{position:relative; background:transparent; min-height:420px;}
-    .dots{
-      position:absolute; inset:auto 6px 6px auto;
-      width:150px; height:150px;
-      background: radial-gradient(circle, rgba(255,106,167,.55) 1.6px, transparent 1.7px);
-      background-size: 12px 12px;
-      border-radius:24px;
-      opacity:.45;
-      transform: translate(10px,-10px);
-      pointer-events:none;
-    }
-    .tri1,.tri2{position:absolute; width:0; height:0; border-style:solid; opacity:.75; pointer-events:none;}
-    .tri1{
-      border-width: 0 0 18px 18px;
-      border-color: transparent transparent var(--accent2) transparent;
-      left: 18px; top: 8px;
-      transform: rotate(18deg);
-    }
-    .tri2{
-      border-width: 16px 0 0 16px;
-      border-color: transparent transparent transparent var(--accent);
-      right: 18px; bottom: 16px;
-      transform: rotate(-12deg);
-    }
+    section{padding:42px 0}
+    .sectionTitle{font-size:28px;margin:0 0 10px;letter-spacing:-.01em}
+    .sectionDesc{color:var(--muted);margin:0 0 18px;line-height:1.7;max-width:78ch}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .card{background:rgba(255,255,255,.86);border:1px solid rgba(0,0,0,.10);border-radius:18px;padding:18px;box-shadow:0 12px 30px rgba(0,0,0,.06);position:relative;overflow:hidden}
+    .card h3{margin:0 0 8px;font-size:16px}
+    .card p{margin:0;color:var(--muted);line-height:1.65;font-size:14px}
+    .tag{display:inline-flex;align-items:center;font-size:12px;font-weight:900;color:#4a4a4a;background:rgba(0,0,0,.055);border:1px solid rgba(0,0,0,.12);padding:6px 10px;border-radius:999px;margin-bottom:10px}
+    .plusBtn{position:absolute;right:14px;bottom:14px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(0,0,0,.16);background:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#111;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,.08);transition:transform .15s ease,background .15s ease,color .15s ease}
+    .plusBtn:hover{background:#111;color:#fff;transform:translateY(-1px)}
+    .plusBtn[aria-expanded="true"]{background:#111;color:#fff;border-color:#111}
+    .specsCollapsible{display:grid;grid-template-rows:0fr;transition:grid-template-rows .22s ease}
+    .specsCollapsible>div{overflow:hidden}
+    .specsCollapsible.open{grid-template-rows:1fr}
+    .specsPanel{margin-top:14px;background:rgba(255,255,255,.9);border:1px solid rgba(0,0,0,.10);border-radius:18px;padding:18px;box-shadow:0 12px 30px rgba(0,0,0,.06)}
+    .specsPanelHead{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start;margin-bottom:12px}
+    .specsTitle{margin:0;font-size:20px;letter-spacing:-.01em}
+    .specsNote{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.55;max-width:82ch}
+    .specsGrid,.productGrid,.commerceGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 14px;margin-top:12px}
+    .specItem{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;border:1px solid rgba(0,0,0,.10);background:rgba(255,255,255,.68)}
+    .specK{font-weight:900;font-size:13px;min-width:170px;color:rgba(42,31,58,.85)}
+    .specV{color:var(--muted);font-size:13px;line-height:1.45}
+    .specCtas{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
 
-    .gridPics{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      padding:10px;
-      background: rgba(255,255,255,.45);
-      border:1px solid rgba(42,31,58,.08);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .pic{
-      border-radius: 16px;
-      background: linear-gradient(135deg, rgba(109,60,255,.25), rgba(255,106,167,.22));
-      border:1px solid rgba(42,31,58,.08);
-      overflow:hidden;
-      min-height:140px;
-      position:relative;
-    }
-    .pic img{width:100%; height:100%; object-fit:cover; display:block;}
-    .picLabel{
-      position:absolute; left:10px; bottom:10px;
-      font-size:12px; font-weight:800;
-      background: rgba(255,255,255,.78);
-      border:1px solid rgba(42,31,58,.12);
-      padding:6px 10px;
-      border-radius:999px;
-      color:rgba(42,31,58,.85);
-      backdrop-filter: blur(6px);
-    }
-    .picTall{grid-row: span 2; min-height:294px;}
+    .acquireGrid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;align-items:start}
+    .sheetCard,.requestCard,.contactCard{background:rgba(255,255,255,.9);border:1px solid rgba(0,0,0,.10);border-radius:18px;padding:20px;box-shadow:0 12px 30px rgba(0,0,0,.06)}
+    .sheetHero{display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;margin-bottom:16px}
+    .priceBox{background:#f1f1ef;border:1px solid rgba(0,0,0,.10);border-radius:14px;padding:14px;min-width:190px}
+    .priceBox strong{display:block;font-size:24px;line-height:1.15;color:var(--ink)}
+    .priceBox span{display:block;color:var(--muted);font-size:12px;line-height:1.4;margin-top:4px}
+    .miniTitle{font-size:15px;font-weight:950;margin:22px 0 8px;color:rgba(42,31,58,.92)}
+    .bulletList{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:14px;line-height:1.65}
+    .notice{background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.12);border-radius:14px;padding:12px 14px;color:var(--muted);font-size:13px;line-height:1.55;margin-top:12px}
+    .productActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .sheetRequestSection{display:none;padding-top:24px}
+    .sheetRequestSection.open{display:block}
+    .sheetRequestInner{max-width:860px;margin:0 auto}
 
-    /* Sections */
-    section{padding:42px 0;}
-    .sectionTitle{font-size:28px; margin:0 0 10px; letter-spacing:-.01em;}
-    .sectionDesc{color:var(--muted); margin:0 0 18px; line-height:1.7; max-width:72ch;}
+    .formGrid{display:grid;gap:10px}
+    .formRow2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    input,textarea,select{width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(0,0,0,.16);background:rgba(255,255,255,.92);color:var(--ink);font:inherit}
+    textarea{resize:vertical;min-height:120px}
+    label{display:grid;gap:6px;font-size:13px;font-weight:500;color:rgba(42,31,58,.88)}
+    label span{font-size:12px;font-weight:400;color:var(--muted)}
+    .requestCard .notice{margin-bottom:22px}
+    .fieldGroup{display:grid;gap:10px;margin:2px 0 0}
+    .fieldGroupTitle{font-size:13px;font-weight:500;color:rgba(42,31,58,.88);margin:0 0 2px}
+    .cepStatus{font-size:12px;line-height:1.4;color:var(--muted);min-height:16px;margin-top:-2px}
+    .formStatus{margin:6px 0 0;color:var(--muted);font-size:14px;line-height:1.5}
+    .smallText{color:var(--muted);font-size:12px;line-height:1.55;margin:8px 0 0}
+    .contactBox{display:grid;grid-template-columns:1fr;gap:14px;align-items:stretch}
+    .contactInline{margin-top:12px;color:var(--muted);font-size:14px;line-height:1.6}
+    .contactIcons{display:flex;gap:14px;align-items:center}
+    .contactIcons a{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,.16);transition:transform .15s ease,background .15s ease,color .15s ease}
+    .contactIcons a:hover{background:#111;transform:translateY(-1px)}
+    .contactIcons a:hover svg{fill:#fff}
+    .contactIcons svg{width:18px;height:18px;fill:rgba(42,31,58,.9)}
+    footer{padding:26px 0 40px;color:rgba(42,31,58,.65);font-size:13px}
+    .waFloat{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#25D366;box-shadow:0 16px 40px rgba(25,10,45,.22);border:1px solid rgba(0,0,0,.08);z-index:999}
+    .waFloat svg{width:28px;height:28px;fill:#fff;display:block}
 
-    .cards{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:14px;
-    }
-    .card{
-      background: rgba(255,255,255,.72);
-      border:1px solid rgba(42,31,58,.10);
-      border-radius: 20px;
-      padding:18px;
-      box-shadow: 0 12px 36px rgba(25,10,45,.08);
-      position:relative; /* for plus button */
-      overflow:hidden;
-    }
-    .card h3{margin:0 0 8px; font-size:16px;}
-    .card p{margin:0; color:var(--muted); line-height:1.65; font-size:14px;}
-    .tag{
-      display:inline-flex; align-items:center;
-      font-size:12px; font-weight:800;
-      color:rgba(42,31,58,.78);
-      background: rgba(109,60,255,.08);
-      border:1px solid rgba(109,60,255,.16);
-      padding:6px 10px; border-radius:999px;
-      margin-bottom:10px;
-    }
 
-    /* ===== PLUS BUTTON (NEW) ===== */
-    .plusBtn{
-      position:absolute;
-      right:14px;
-      bottom:14px;
-      width:34px;
-      height:34px;
-      border-radius:50%;
-      border:1px solid rgba(42,31,58,.14);
-      background: rgba(255,255,255,.78);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:900;
-      font-size:18px;
-      color:rgba(42,31,58,.85);
-      cursor:pointer;
-      box-shadow: 0 10px 26px rgba(25,10,45,.08);
-      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
-    }
-    .plusBtn:hover{
-      background: rgba(255,255,255,.95);
-      transform: translateY(-1px);
-      box-shadow: 0 14px 34px rgba(25,10,45,.10);
-    }
-    .plusBtn[aria-expanded="true"]{
-      background: rgba(109,60,255,.10);
-      border-color: rgba(109,60,255,.28);
-    }
+    .tri1,.tri2{display:none}
+    .dots{background:radial-gradient(circle,rgba(0,0,0,.18) 1.4px,transparent 1.5px);background-size:12px 12px;opacity:.28}
+    input:focus,textarea:focus,select:focus{outline:none;border-color:#111;box-shadow:0 0 0 3px rgba(0,0,0,.08)}
 
-    /* ===== SPECS PANEL (NEW) ===== */
-    .specsPanel{
-      margin-top:14px;
-      background: rgba(255,255,255,.72);
-      border:1px solid rgba(42,31,58,.10);
-      border-radius: 22px;
-      padding:18px;
-      box-shadow: 0 12px 36px rgba(25,10,45,.08);
-    }
-    .specsPanelHead{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      align-items:flex-start;
-      margin-bottom:12px;
-    }
-    .specsTitle{margin:0; font-size:20px; letter-spacing:-.01em;}
-    .specsNote{margin:6px 0 0; color:var(--muted); font-size:13px; line-height:1.55; max-width:78ch;}
-    .specsGrid{
-      display:grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap:10px 14px;
-      margin-top:12px;
-    }
-    .specItem{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      padding:10px 12px;
-      border-radius:16px;
-      border:1px solid rgba(42,31,58,.10);
-      background: rgba(255,255,255,.55);
-    }
-    .specK{
-      font-weight:900;
-      font-size:13px;
-      min-width:170px;
-      color:rgba(42,31,58,.85);
-    }
-    .specV{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.45;
-    }
-    .specCtas{display:flex; gap:12px; flex-wrap:wrap; margin-top:2px;}
-
-    /* Collapsible behavior */
-    .specsCollapsible{
-      display:grid;
-      grid-template-rows: 0fr;
-      transition: grid-template-rows .22s ease;
-    }
-    .specsCollapsible > div{overflow:hidden;}
-    .specsCollapsible.open{grid-template-rows: 1fr;}
-
-    /* Contact */
-    .contactBox{display:grid; grid-template-columns:1fr; gap:14px; align-items:stretch;}
-    .contactCard{
-      background: rgba(255,255,255,.72);
-      border:1px solid rgba(42,31,58,.10);
-      border-radius: 20px;
-      padding:18px;
-      box-shadow: 0 12px 36px rgba(25,10,45,.08);
-    }
-    .contactInline{
-      margin-top:12px;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.6;
-    }
-
-    .contactIcons{display:flex;gap:14px;align-items:center;}
-    .contactIcons a{
-      width:36px;height:36px;
-      display:inline-flex;align-items:center;justify-content:center;
-      border-radius:50%;
-      background:rgba(109,60,255,.08);
-      border:1px solid rgba(109,60,255,.18);
-      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
-    }
-    .contactIcons a:hover{
-      background:rgba(109,60,255,.18);
-      transform: translateY(-1px);
-      box-shadow: 0 6px 18px rgba(25,10,45,.12);
-    }
-    .contactIcons svg{width:18px;height:18px;fill:rgba(42,31,58,.9);}
-
-    footer{padding:26px 0 40px; color:rgba(42,31,58,.65); font-size:13px;}
-
-    /* Language switch */
-    .langSwitch{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      justify-content:flex-end;
-      min-width:240px;
-    }
-    .langBtn{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:7px 10px;
-      border-radius:999px;
-      background:rgba(255,255,255,.65);
-      border:1px solid rgba(42,31,58,.14);
-      color:rgba(42,31,58,.85);
-      font-size:13px;
-      font-weight:700;
-      cursor:pointer;
-      user-select:none;
-    }
-    .langBtn:hover{background:rgba(109,60,255,.07)}
-    .langBtn[aria-pressed="true"]{
-      border-color: rgba(109,60,255,.35);
-      box-shadow: 0 10px 25px rgba(25,10,45,.10);
-    }
-    .flagIcon{
-      width:18px;
-      height:18px;
-      display:block;
-      border-radius:50%;
-      overflow:hidden;
-    }
-    .langLabel{font-weight:800; letter-spacing:.01em;}
-
-    /* Responsive */
-    @media (max-width: 980px){
-      .heroGrid{grid-template-columns:1fr; gap:22px;}
-      .brand{min-width:auto}
-      .cards{grid-template-columns:1fr;}
+    @media (max-width:980px){
+      .heroGrid,.acquireGrid{grid-template-columns:1fr;gap:22px}
+      .cards{grid-template-columns:1fr}
       .mosaic{min-height:auto}
       .langSwitch{min-width:auto}
-      .specsGrid{grid-template-columns:1fr;}
-      .specK{min-width:130px;}
+      .specsGrid,.productGrid,.commerceGrid{grid-template-columns:1fr}
+      .specK{min-width:130px}
     }
-
-    nav a{padding:8px 6px;font-size:14px;}
-    .langSwitch{min-width:auto;order:2;}
-
-    .menuToggle{
-      display:none;
-      background:none;
-      border:none;
-      font-size:26px;
-      cursor:pointer;
-      color:var(--ink);
+    @media (max-width:768px){
+      .menuToggle{display:block}
+      nav{display:none;position:absolute;top:100%;left:0;width:100%;flex-direction:column;background:rgba(255,255,255,.98);border-top:1px solid rgba(0,0,0,.08);padding:10px 0;box-shadow:0 18px 45px rgba(0,0,0,.14)}
+      nav.open{display:flex}
+      nav a{padding:12px 20px;font-size:16px}
+      .brand{min-width:auto}
+      .brand img{width:150px}
+      .langSwitch{order:2;min-width:auto}
+      .topbar{position:relative}
+      .formRow2{grid-template-columns:1fr}
+      .btn{width:100%}
+      .ctaRow,.specCtas,.productActions{width:100%}
     }
-
-    /* ===== MOBILE HEADER ===== */
-    @media (max-width: 768px){
-      .menuToggle{display:block;}
-
-      nav{
-        display:none;
-        position:absolute;
-        top:100%;
-        left:0;
-        width:100%;
-        flex-direction:column;
-        background:rgba(251,247,251,.97);
-        border-top:1px solid rgba(42,31,58,.08);
-        padding:10px 0;
-      }
-      nav.open{display:flex;}
-      nav a{padding:12px 20px;font-size:16px;}
-      .brand img{width:150px;}
-      .langSwitch{min-width:auto;}
-      .topbar{position:relative;}
-    }
-
-/* ===== FLOATING WHATSAPP BUTTON (NEW) ===== */
-.waFloat{
-  position:fixed;
-  right:18px;
-  bottom:18px;
-  width:56px;
-  height:56px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#25D366;
-  box-shadow: 0 16px 40px rgba(25,10,45,.22);
-  border:1px solid rgba(0,0,0,.08);
-  z-index:999;
-}
-
-.waFloat svg{
-  width:28px;
-  height:28px;
-  fill:#fff;
-  display:block;
-}
-
-    @media (max-width: 768px){
-      .waFloatLabel{display:none;}
-    }
-
   </style>
 </head>
 <body>
-
 <header>
   <div class="wrap topbar">
-
-    <div class="brand">
-      <img src="logo.png" alt="AMS - Adaptive Motion Solutions" />
-    </div>
-
+    <div class="brand"><img src="logo.png" alt="AMS - Adaptive Motion Solutions" /></div>
     <button class="menuToggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
-
     <nav id="mainNav">
       <a href="#home" data-i18n="nav_home">Início</a>
       <a href="#about" data-i18n="nav_about">Sobre</a>
       <a href="#services" data-i18n="nav_services">Serviços</a>
       <a href="#contact" data-i18n="nav_contact">Contato</a>
     </nav>
-
     <div class="langSwitch" aria-label="Language selector">
       <button class="langBtn" id="btnPT" type="button" aria-pressed="true" title="Português (Brasil)">
-        <svg class="flagIcon" viewBox="0 0 64 64" aria-hidden="true">
-          <defs><clipPath id="cBR"><circle cx="32" cy="32" r="32"/></clipPath></defs>
-          <g clip-path="url(#cBR)">
-            <rect width="64" height="64" fill="#1aa34a"/>
-            <polygon points="32,10 56,32 32,54 8,32" fill="#ffd34d"/>
-            <circle cx="32" cy="32" r="12.5" fill="#1f4fbf"/>
-            <path d="M18 30c7 6 21 6 28 0" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round"/>
-          </g>
-        </svg>
+        <svg class="flagIcon" viewBox="0 0 64 64" aria-hidden="true"><defs><clipPath id="cBR"><circle cx="32" cy="32" r="32"/></clipPath></defs><g clip-path="url(#cBR)"><rect width="64" height="64" fill="#1aa34a"/><polygon points="32,10 56,32 32,54 8,32" fill="#ffd34d"/><circle cx="32" cy="32" r="12.5" fill="#1f4fbf"/><path d="M18 30c7 6 21 6 28 0" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/></g></svg>
         <span class="langLabel">PT</span>
       </button>
-
       <button class="langBtn" id="btnEN" type="button" aria-pressed="false" title="English (US)">
-        <svg class="flagIcon" viewBox="0 0 64 64" aria-hidden="true">
-          <defs><clipPath id="cUS"><circle cx="32" cy="32" r="32"/></clipPath></defs>
-          <g clip-path="url(#cUS)">
-            <rect width="64" height="64" fill="#ffffff"/>
-            <g fill="#d22f2f">
-              <rect x="0" y="0" width="64" height="6"/>
-              <rect x="0" y="12" width="64" height="6"/>
-              <rect x="0" y="24" width="64" height="6"/>
-              <rect x="0" y="36" width="64" height="6"/>
-              <rect x="0" y="48" width="64" height="6"/>
-              <rect x="0" y="60" width="64" height="6"/>
-            </g>
-            <rect x="0" y="0" width="30" height="22" fill="#1f4fbf"/>
-            <g fill="#ffffff" opacity="0.95">
-              <circle cx="5" cy="4" r="1.1"/><circle cx="11" cy="4" r="1.1"/><circle cx="17" cy="4" r="1.1"/><circle cx="23" cy="4" r="1.1"/>
-              <circle cx="8" cy="8" r="1.1"/><circle cx="14" cy="8" r="1.1"/><circle cx="20" cy="8" r="1.1"/><circle cx="26" cy="8" r="1.1"/>
-              <circle cx="5" cy="12" r="1.1"/><circle cx="11" cy="12" r="1.1"/><circle cx="17" cy="12" r="1.1"/><circle cx="23" cy="12" r="1.1"/>
-              <circle cx="8" cy="16" r="1.1"/><circle cx="14" cy="16" r="1.1"/><circle cx="20" cy="16" r="1.1"/><circle cx="26" cy="16" r="1.1"/>
-            </g>
-          </g>
-        </svg>
+        <svg class="flagIcon" viewBox="0 0 64 64" aria-hidden="true"><defs><clipPath id="cUS"><circle cx="32" cy="32" r="32"/></clipPath></defs><g clip-path="url(#cUS)"><rect width="64" height="64" fill="#fff"/><g fill="#d22f2f"><rect x="0" y="0" width="64" height="6"/><rect x="0" y="12" width="64" height="6"/><rect x="0" y="24" width="64" height="6"/><rect x="0" y="36" width="64" height="6"/><rect x="0" y="48" width="64" height="6"/><rect x="0" y="60" width="64" height="6"/></g><rect x="0" y="0" width="30" height="22" fill="#1f4fbf"/><g fill="#fff" opacity=".95"><circle cx="5" cy="4" r="1.1"/><circle cx="11" cy="4" r="1.1"/><circle cx="17" cy="4" r="1.1"/><circle cx="23" cy="4" r="1.1"/><circle cx="8" cy="8" r="1.1"/><circle cx="14" cy="8" r="1.1"/><circle cx="20" cy="8" r="1.1"/><circle cx="26" cy="8" r="1.1"/><circle cx="5" cy="12" r="1.1"/><circle cx="11" cy="12" r="1.1"/><circle cx="17" cy="12" r="1.1"/><circle cx="23" cy="12" r="1.1"/><circle cx="8" cy="16" r="1.1"/><circle cx="14" cy="16" r="1.1"/><circle cx="20" cy="16" r="1.1"/><circle cx="26" cy="16" r="1.1"/></g></g></svg>
         <span class="langLabel">EN</span>
       </button>
     </div>
-
   </div>
 </header>
 
@@ -525,39 +197,18 @@ main[id], section[id]{
   <div class="wrap heroGrid">
     <div>
       <div class="kicker">Adaptive Motion Solutions</div>
-
       <h1 data-i18n="hero_h1">Tecnologia voltada ao comportamento humano</h1>
-
-      <p class="lead" data-i18n="hero_lead">
-        Desenvolvemos instrumentação e softwares aplicados à análise do movimento humano.
-        Também conduzimos P&D de soluções assistivas/lúdicas voltadas ao neurodesenvolvimento.
-      </p>
-
+      <p class="lead" data-i18n="hero_lead">Desenvolvemos sistemas de captura e análise de dados aplicados à compreensão do comportamento humano em diferentes contextos. A partir dessas tecnologias, concebemos e prototipamos soluções físicas e digitais — incluindo dispositivos personalizados e recursos interativos — voltadas à autonomia, aprendizagem e interação.</p>
       <div class="ctaRow">
         <a class="btn btnPrimary" href="#services" data-open-specs="true" data-i18n="btn_specs">Ver especificações ↗</a>
       </div>
     </div>
-
     <div class="mosaic" aria-label="Galeria">
-      <div class="tri1"></div>
-      <div class="tri2"></div>
-      <div class="dots"></div>
-
+      <div class="tri1"></div><div class="tri2"></div><div class="dots"></div>
       <div class="gridPics">
-        <div class="pic">
-          <img src="integracao_testes.png" alt="" onerror="this.remove()">
-          <div class="picLabel" data-i18n="pic_integration">Integração de sinais</div>
-        </div>
-
-        <div class="pic picTall">
-          <img src="optical_sensing.png" alt="" onerror="this.remove()">
-          <div class="picLabel" data-i18n="pic_optical">Eye-tracking</div>
-        </div>
-
-        <div class="pic">
-          <img src="analise_sinais.png" alt="" onerror="this.remove()">
-          <div class="picLabel" data-i18n="pic_processing">Processamento de sinais</div>
-        </div>
+        <div class="pic"><img src="integracao_testes_site_v3.png" alt="" onerror="this.remove()"><div class="picLabel" data-i18n="pic_integration">Integração de sinais</div></div>
+        <div class="pic picTall"><img class="imgOptical" src="optical_sensing_site_v3.png" alt="" onerror="this.remove()"><div class="picLabel" data-i18n="pic_optical">Rastreamento ocular</div></div>
+        <div class="pic"><img src="analise_sinais_site_v3.png" alt="" onerror="this.remove()"><div class="picLabel" data-i18n="pic_processing">Processamento de sinais</div></div>
       </div>
     </div>
   </div>
@@ -566,41 +217,27 @@ main[id], section[id]{
 <section id="about">
   <div class="wrap">
     <h2 class="sectionTitle" data-i18n="about_title">Sobre</h2>
-    <p class="sectionDesc" data-i18n="about_desc">
-      A Adaptive Motion Solutions (AMS) é uma empresa brasileira dedicada ao desenvolvimento de tecnologias para mensuração
-      e análise do comportamento humano. Estamos iniciando operações para atender projetos a partir de 2026, em colaboração
-      com grupos acadêmicos e iniciativas aplicadas em pesquisa, saúde, ergonomia e desempenho humano.
-    </p>
+    <p class="sectionDesc" data-i18n="about_desc">A Adaptive Motion Solutions (AMS) é uma empresa brasileira dedicada ao desenvolvimento de tecnologias de sensoriamento e software para medir, analisar e apoiar decisões sobre o comportamento humano em contextos reais. Iniciamos operações para atender projetos a partir de 2026, em colaboração com grupos acadêmicos e iniciativas aplicadas em pesquisa, saúde, ergonomia e desempenho humano.</p>
   </div>
 </section>
 
 <section id="services">
   <div class="wrap">
     <h2 class="sectionTitle" data-i18n="services_title">Serviços</h2>
-    <p class="sectionDesc" data-i18n="services_desc">
-      Entregamos soluções completas (hardware + software) e serviços técnicos para projetos sob demanda.
-    </p>
+    <p class="sectionDesc" data-i18n="services_desc">Entregamos soluções completas (hardware + software) e serviços técnicos para projetos sob demanda.</p>
 
     <div class="cards">
       <div class="card" id="opticalCard">
         <div class="tag" data-i18n="tag_instrumentation">Instrumentação</div>
         <h3 data-i18n="svc1_title">Sistemas ópticos</h3>
         <p data-i18n="svc1_desc">Hardware para captura da oculomotricidade com módulos de sincronização.</p>
-
-        <!-- NEW: plus button that opens specs -->
-        <button class="plusBtn" id="specsToggle"
-          type="button"
-          aria-label="Abrir especificações do rastreador ocular"
-          aria-controls="specsPanel"
-          aria-expanded="false">+</button>
+        <button class="plusBtn" id="specsToggle" type="button" aria-label="Abrir especificações do rastreador ocular" aria-controls="specsPanel" aria-expanded="false">+</button>
       </div>
-
       <div class="card">
         <div class="tag" data-i18n="tag_software">Software</div>
         <h3 data-i18n="svc2_title">Analytics de movimento humano</h3>
         <p data-i18n="svc2_desc">Ferramentas e módulos de análise para dados motores, integração e relatórios sob demanda.</p>
       </div>
-
       <div class="card">
         <div class="tag" data-i18n="tag_rd">P&D</div>
         <h3 data-i18n="svc3_title">Soluções assistivas e lúdicas</h3>
@@ -608,78 +245,99 @@ main[id], section[id]{
       </div>
     </div>
 
-    <!-- NEW: collapsible specs panel (opens via + button) -->
     <div class="specsCollapsible" id="specsCollapsible" aria-live="polite">
       <div>
         <div class="specsPanel" id="specsPanel">
           <div class="specsPanelHead">
             <div>
               <h3 class="specsTitle" data-i18n="specs_title">Rastreador ocular</h3>
-              <p class="specsNote" data-i18n="specs_note">
-                Sistema tipo óculos/headset com software incluso. Especificações podem variar conforme demanda.
-              </p>
+              <p class="specsNote" data-i18n="specs_note">Sistema tipo óculos/headset com software incluso. Os parâmetros podem ser personalizados conforme o protocolo experimental, o ambiente de coleta e a demanda do projeto.</p>
             </div>
           </div>
-
           <div class="specsGrid">
-            <div class="specItem">
-              <div class="specK" data-i18n="spec_k1">Amostragem</div>
-              <div class="specV" data-i18n="spec_v1">120 Hz</div>
-            </div>
-
-            <div class="specItem">
-              <div class="specK" data-i18n="spec_k2">Câmera de cena</div>
-              <div class="specV" data-i18n="spec_v2">720p (1280×720), 110° (POV)</div>
-            </div>
-
-            <div class="specItem">
-              <div class="specK" data-i18n="spec_k3">Calibração</div>
-              <div class="specV" data-i18n="spec_v3">Ponto único e multipontos</div>
-            </div>
-
-            <div class="specItem">
-              <div class="specK" data-i18n="spec_k4">Uso externo</div>
-              <div class="specV" data-i18n="spec_v4">Sim</div>
-            </div>
-
-            <div class="specItem">
-              <div class="specK" data-i18n="spec_k5">Dados brutos</div>
-              <div class="specV" data-i18n="spec_v5">Raw data disponível (exportação e análise)</div>
-            </div>
-
-            <div class="specItem">
-              <div class="specK" data-i18n="spec_k6">Métricas (120 Hz)</div>
-              <div class="specV" data-i18n="spec_v6">Diâmetro pupilar (px e mm), gaze raw, fixações, sacadas e piscadas</div>
-            </div>
-
-            <div class="specItem">
-              <div class="specK" data-i18n="spec_k7">Gaze integrado (POV)</div>
-              <div class="specV" data-i18n="spec_v7">Sim</div>
-            </div>
-
-            <div class="specItem">
-              <div class="specK" data-i18n="spec_k8">Head pose</div>
-              <div class="specV" data-i18n="spec_v8">9 DoF</div>
-            </div>
-
-            <div class="specItem">
-              <div class="specK" data-i18n="spec_k9">Sincronização</div>
-              <div class="specV" data-i18n="spec_v9">Disponível</div>
-            </div>
-
-            <div class="specItem">
-              <div class="specK" data-i18n="spec_k10">Software</div>
-              <div class="specV" data-i18n="spec_v10">Software de análise incluso</div>
-            </div>
+            <div class="specItem"><div class="specK" data-i18n="spec_k1">Amostragem</div><div class="specV" data-i18n="spec_v1">Até 120 Hz para análise offline e até 60 Hz para visualização/processamento online.</div></div>
+            <div class="specItem"><div class="specK" data-i18n="spec_k2">Câmera de cena</div><div class="specV" data-i18n="spec_v2">720p (1280×720), campo de visão aproximado de 110°.</div></div>
+            <div class="specItem"><div class="specK" data-i18n="spec_k3">Calibração</div><div class="specV" data-i18n="spec_v3">Calibração multipontos, com ou sem homografia, conforme o protocolo experimental.</div></div>
+            <div class="specItem"><div class="specK" data-i18n="spec_k4">Uso externo</div><div class="specV" data-i18n="spec_v4">Compatível com ambientes externos, sujeito às condições de iluminação, contraste e validação experimental.</div></div>
+            <div class="specItem"><div class="specK" data-i18n="spec_k5">Dados brutos</div><div class="specV" data-i18n="spec_v5">Acesso aos dados brutos e exportação para análise.</div></div>
+            <div class="specItem"><div class="specK" data-i18n="spec_k6">Métricas oculomotoras</div><div class="specV" data-i18n="spec_v6">Diâmetro pupilar, gaze raw, gaze sobre POV, fixações, sacadas e piscadas.</div></div>
+            <div class="specItem"><div class="specK" data-i18n="spec_k8">Head pose / IMU</div><div class="specV" data-i18n="spec_v8">Rotation Vector, quaternions, Game Rotation Vector e dados brutos de acelerômetro, giroscópio e magnetômetro.</div></div>
+            <div class="specItem"><div class="specK" data-i18n="spec_k10">Software</div><div class="specV" data-i18n="spec_v10">Software de análise incluso.</div></div>
           </div>
-
-
+          <div class="specCtas">
+            <a class="btn btnGhost" href="#contact" data-i18n="btn_quote">Solicitar cotação</a>
+            <a class="btn btnPrimary" href="#acquisition" data-open-product-sheet="true" data-i18n="btn_product_sheet">Product sheet ↗</a>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <div style="margin-top:18px;">
-      <a class="btn btnPrimary" href="#contact" data-i18n="btn_quote">Solicitar cotação</a>
+<section id="acquisition" class="sheetRequestSection" aria-live="polite">
+  <div class="wrap sheetRequestInner">
+    <div class="requestCard" id="product-sheet-form">
+      <h2 class="sectionTitle" data-i18n="sheet_form_title">Solicitar product sheet</h2>
+      <p class="sectionDesc" data-i18n="sheet_form_intro">Informe os dados institucionais para receber por e-mail o product sheet e as instruções de pagamento.</p>
+      <div class="notice" data-i18n="product_sheet_notice">O formulário não gera boleto nem cobrança automaticamente. Após o envio, você receberá o Product Sheet por e-mail e deverá responder confirmando a configuração/modalidade desejada.</div>
+
+      <form id="productSheetForm" method="POST" action="https://script.google.com/macros/s/AKfycbzeK-4ypovm0Csf36wVhvZ0r-idMg_FZ5KFdwpuCqV-yENK_mXA4K5R4A17VB1EVeD7/exec" data-endpoint="https://script.google.com/macros/s/AKfycbzeK-4ypovm0Csf36wVhvZ0r-idMg_FZ5KFdwpuCqV-yENK_mXA4K5R4A17VB1EVeD7/exec">
+        <div class="formGrid">
+          <div class="formRow2">
+            <label><span data-i18n="lbl_name">Nome do solicitante</span><input name="nome" type="text" placeholder="Nome completo" required data-i18n-placeholder="ph_fullname"></label>
+            <label><span data-i18n="lbl_email">E-mail institucional</span><input name="email" type="email" placeholder="email@instituicao.br" required data-i18n-placeholder="ph_inst_email"></label>
+          </div>
+          <div class="formRow2">
+            <label><span data-i18n="lbl_phone">Telefone/WhatsApp</span><input name="telefone" type="tel" placeholder="(00) 00000-0000" data-i18n-placeholder="ph_phone"></label>
+            <label><span data-i18n="lbl_role">Cargo ou setor</span><input name="cargo" type="text" placeholder="Ex.: compras, financeiro, pesquisador responsável" data-i18n-placeholder="ph_role"></label>
+          </div>
+          <label><span data-i18n="lbl_institution">Instituição / Universidade</span><input name="instituicao" type="text" placeholder="Nome da instituição" required data-i18n-placeholder="ph_institution"></label>
+          <div class="formRow2">
+            <label><span data-i18n="lbl_cnpj">CNPJ da instituição</span><input name="cnpj" type="text" placeholder="00.000.000/0000-00" data-i18n-placeholder="ph_cnpj"></label>
+            <label><span data-i18n="lbl_funding">Fomento / projeto</span><input name="fomento" type="text" placeholder="Ex.: FAPESP, CNPq, CAPES, projeto interno" data-i18n-placeholder="ph_funding"></label>
+          </div>
+          <div class="fieldGroup" id="deliveryAddressGroup">
+            <p class="fieldGroupTitle" data-i18n="lbl_delivery_address">Endereço de entrega</p>
+            <div class="formRow2">
+              <label><span data-i18n="lbl_zip">CEP</span><input id="endereco_cep" name="cep" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="00000-000" data-i18n-placeholder="ph_zip"></label>
+              <label><span data-i18n="lbl_street">Rua</span><input id="endereco_rua" name="rua" type="text" autocomplete="address-line1" placeholder="Rua / Avenida" data-i18n-placeholder="ph_street"></label>
+            </div>
+            <div class="formRow2">
+              <label><span data-i18n="lbl_number">Nº</span><input id="endereco_numero" name="numero" type="text" autocomplete="address-line2" placeholder="Número" data-i18n-placeholder="ph_number"></label>
+              <label><span data-i18n="lbl_complement">Complemento</span><input id="endereco_complemento" name="complemento" type="text" placeholder="Sala, bloco, departamento..." data-i18n-placeholder="ph_complement"></label>
+            </div>
+            <div class="formRow2">
+              <label><span data-i18n="lbl_neighborhood">Bairro</span><input id="endereco_bairro" name="bairro" type="text" autocomplete="address-level3" placeholder="Bairro" data-i18n-placeholder="ph_neighborhood"></label>
+              <label><span data-i18n="lbl_city">Cidade</span><input id="endereco_cidade" name="cidade" type="text" autocomplete="address-level2" placeholder="Cidade" data-i18n-placeholder="ph_city"></label>
+            </div>
+            <div class="formRow2">
+              <label><span data-i18n="lbl_state">UF</span><input id="endereco_uf" name="uf" type="text" maxlength="2" autocomplete="address-level1" placeholder="UF" data-i18n-placeholder="ph_state"></label>
+              <input type="hidden" id="endereco_full" name="endereco" value="">
+            </div>
+            <div class="cepStatus" id="cepStatus" aria-live="polite"></div>
+          </div>
+          <label><span data-i18n="lbl_payment_method">Forma de pagamento preferencial</span>
+            <select name="pagamento" required>
+              <option value="" data-i18n="opt_select_payment">Selecione uma opção</option>
+              <option value="Boleto bancário" data-i18n="opt_bank_slip">Boleto bancário</option>
+              <option value="Pix PJ" data-i18n="opt_pix">Pix PJ</option>
+              <option value="Transferência bancária" data-i18n="opt_transfer">Transferência bancária</option>
+              <option value="Cartão de crédito" data-i18n="opt_card">Cartão de crédito</option>
+              <option value="A definir com o financeiro" data-i18n="opt_finance">A definir com o setor financeiro</option>
+            </select>
+          </label>
+          <label><span data-i18n="lbl_notes">Observações</span><textarea name="observacoes" rows="4" placeholder="Informe necessidades de compra, nota fiscal, entrega futura, fomento ou contato do setor financeiro." data-i18n-placeholder="ph_product_sheet_notes"></textarea></label>
+
+          <input type="text" name="_gotcha" style="display:none">
+          <input type="hidden" name="_subject" value="Solicitação de product sheet - AMS Eye Tracker">
+          <input type="hidden" name="tipo_solicitacao" value="Solicitação de product sheet e instruções de pagamento">
+          <input type="hidden" name="produto" value="Adaptive Motion Solutions Headset / Eye Tracker">
+
+          <button class="btn btnPrimary" type="submit" data-i18n="btn_send_product_sheet">Solicitar product sheet ↗</button>
+          <p id="productSheetStatus" class="formStatus"></p>
+          <p class="smallText" data-i18n="product_sheet_privacy">Você receberá por e-mail o Product Sheet. A cobrança será emitida somente após confirmação da configuração/modalidade desejada.</p>
+        </div>
+      </form>
     </div>
   </div>
 </section>
@@ -687,68 +345,35 @@ main[id], section[id]{
 <section id="contact">
   <div class="wrap">
     <h2 class="sectionTitle" data-i18n="contact_title">Contato</h2>
-
     <div class="contactBox">
       <div class="contactCard">
         <h3 style="margin:0 0 12px;" data-i18n="contact_msg_title">Mensagem</h3>
-
-        <form id="contactForm" method="POST" data-endpoint="https://formspree.io/f/xnjbqllj">
-          <div style="display:grid;gap:10px;">
-            <input name="name" type="text" placeholder="Seu nome" required data-i18n-placeholder="ph_name"
-              style="padding:12px 14px;border-radius:14px;border:1px solid rgba(42,31,58,.14);background:rgba(255,255,255,.8);">
-
-            <input name="email" type="email" placeholder="Seu e-mail" required data-i18n-placeholder="ph_email"
-              style="padding:12px 14px;border-radius:14px;border:1px solid rgba(42,31,58,.14);background:rgba(255,255,255,.8);">
-
-            <input name="subject" type="text" placeholder="Assunto (ex.: cotação, parceria, dúvida)" data-i18n-placeholder="ph_subject"
-              style="padding:12px 14px;border-radius:14px;border:1px solid rgba(42,31,58,.14);background:rgba(255,255,255,.8);">
-
-            <textarea name="message" rows="5" placeholder="Fale com a AMS" required data-i18n-placeholder="ph_message"
-              style="padding:12px 14px;border-radius:14px;border:1px solid rgba(42,31,58,.14);background:rgba(255,255,255,.8);resize:vertical;"></textarea>
-
+        <form id="contactForm" method="POST" action="https://formspree.io/f/xnjbqllj" data-endpoint="https://formspree.io/f/xnjbqllj">
+          <div class="formGrid">
+            <input name="name" type="text" placeholder="Seu nome" required data-i18n-placeholder="ph_name">
+            <input name="email" type="email" placeholder="Seu e-mail" required data-i18n-placeholder="ph_email">
+            <input name="subject" type="text" placeholder="Assunto (ex.: cotação, parceria, dúvida)" data-i18n-placeholder="ph_subject">
+            <textarea name="message" rows="5" placeholder="Fale com a AMS" required data-i18n-placeholder="ph_message"></textarea>
             <input type="text" name="_gotcha" style="display:none">
             <input type="hidden" name="_subject" value="Novo contato via site AMS">
-
-            <button class="btn btnPrimary" type="submit" style="justify-content:center;" data-i18n="btn_send">
-              Enviar ↗
-            </button>
-
-            <p id="formStatus" style="margin:6px 0 0;color:var(--muted);font-size:14px;line-height:1.5;"></p>
+            <button class="btn btnPrimary" type="submit" data-i18n="btn_send">Enviar ↗</button>
+            <p id="formStatus" class="formStatus"></p>
           </div>
         </form>
-
         <div class="contactInline contactIcons">
-          <a href="mailto:contact@amsbrazil.com" aria-label="Enviar e-mail">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M2 6.5C2 5.12 3.12 4 4.5 4h15C20.88 4 22 5.12 22 6.5v11c0 1.38-1.12 2.5-2.5 2.5h-15C3.12 20 2 18.88 2 17.5v-11Zm2.2-.3L12 11.2l7.8-5H4.2Zm15.3 1.9-7.1 4.5a.9.9 0 0 1-1 0L4.3 8.1V17.5c0 .28.22.5.5.5h15a.5.5 0 0 0 .5-.5V8.1Z"/>
-            </svg>
-          </a>
-
-          <a href="https://wa.me/553184594302" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20.52 3.48A11.94 11.94 0 0 0 12 0C5.38 0 0 5.38 0 12c0 2.11.55 4.17 1.6 6L0 24l6.18-1.62A11.96 11.96 0 0 0 12 24c6.62 0 12-5.38 12-12 0-3.19-1.24-6.19-3.48-8.52Zm-8.52 18a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.66.96.98-3.57-.24-.37A9.9 9.9 0 1 1 12 21.48Zm5.43-7.35c-.3-.15-1.77-.87-2.05-.97-.28-.1-.48-.15-.68.15-.2.3-.78.97-.96 1.17-.18.2-.36.22-.66.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.68-2.08-.18-.3-.02-.46.13-.61.14-.14.3-.36.45-.54.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.68-1.64-.93-2.25-.24-.57-.48-.49-.68-.5h-.58c-.2 0-.52.07-.8.37-.28.3-1.05 1.03-1.05 2.52s1.08 2.93 1.23 3.13c.15.2 2.12 3.23 5.13 4.53.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.07-.12-.27-.2-.57-.35Z"/>
-            </svg>
-          </a>
+          <a href="mailto:contact@amsbrazil.com" aria-label="Enviar e-mail"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 6.5C2 5.12 3.12 4 4.5 4h15C20.88 4 22 5.12 22 6.5v11c0 1.38-1.12 2.5-2.5 2.5h-15C3.12 20 2 18.88 2 17.5v-11Zm2.2-.3L12 11.2l7.8-5H4.2Zm15.3 1.9-7.1 4.5a.9.9 0 0 1-1 0L4.3 8.1V17.5c0 .28.22.5.5.5h15a.5.5 0 0 0 .5-.5V8.1Z"/></svg></a>
+          <a href="https://wa.me/553184594302" target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.94 11.94 0 0 0 12 0C5.38 0 0 5.38 0 12c0 2.11.55 4.17 1.6 6L0 24l6.18-1.62A11.96 11.96 0 0 0 12 24c6.62 0 12-5.38 12-12 0-3.19-1.24-6.19-3.48-8.52Zm-8.52 18a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.66.96.98-3.57-.24-.37A9.9 9.9 0 1 1 12 21.48Zm5.43-7.35c-.3-.15-1.77-.87-2.05-.97-.28-.1-.48-.15-.68.15-.2.3-.78.97-.96 1.17-.18.2-.36.22-.66.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.68-2.08-.18-.3-.02-.46.13-.61.14-.14.3-.36.45-.54.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.68-1.64-.93-2.25-.24-.57-.48-.49-.68-.5h-.58c-.2 0-.52.07-.8.37-.28.3-1.05 1.03-1.05 2.52s1.08 2.93 1.23 3.13c.15.2 2.12 3.23 5.13 4.53.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.07-.12-.27-.2-.57-.35Z"/></svg></a>
         </div>
-
       </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="wrap">
-    © <span id="y"></span> Adaptive Motion Solutions (AMS). <span data-i18n="rights">All rights reserved.</span>
-  </div>
+  <div class="wrap">© <span id="y"></span> Adaptive Motion Solutions (AMS). <span data-i18n="rights">Todos os direitos reservados.</span></div>
 </footer>
 
-<!-- ===== NEW: Floating WhatsApp button ===== -->
-<a class="waFloat" href="https://wa.me/553184594302" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M20.52 3.48A11.94 11.94 0 0 0 12 0C5.38 0 0 5.38 0 12c0 2.11.55 4.17 1.6 6L0 24l6.18-1.62A11.96 11.96 0 0 0 12 24c6.62 0 12-5.38 12-12 0-3.19-1.24-6.19-3.48-8.52Zm-8.52 18a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.66.96.98-3.57-.24-.37A9.9 9.9 0 1 1 12 21.48Zm5.43-7.35c-.3-.15-1.77-.87-2.05-.97-.28-.1-.48-.15-.68.15-.2.3-.78.97-.96 1.17-.18.2-.36.22-.66.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.68-2.08-.18-.3-.02-.46.13-.61.14-.14.3-.36.45-.54.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.68-1.64-.93-2.25-.24-.57-.48-.49-.68-.5h-.58c-.2 0-.52.07-.8.37-.28.3-1.05 1.03-1.05 2.52s1.08 2.93 1.23 3.13c.15.2 2.12 3.23 5.13 4.53.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.07-.12-.27-.2-.57-.35Z"/>
-  </svg>
-</a>
-
+<a class="waFloat" href="https://wa.me/553184594302" target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.94 11.94 0 0 0 12 0C5.38 0 0 5.38 0 12c0 2.11.55 4.17 1.6 6L0 24l6.18-1.62A11.96 11.96 0 0 0 12 24c6.62 0 12-5.38 12-12 0-3.19-1.24-6.19-3.48-8.52Zm-8.52 18a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.66.96.98-3.57-.24-.37A9.9 9.9 0 1 1 12 21.48Zm5.43-7.35c-.3-.15-1.77-.87-2.05-.97-.28-.1-.48-.15-.68.15-.2.3-.78.97-.96 1.17-.18.2-.36.22-.66.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.68-2.08-.18-.3-.02-.46.13-.61.14-.14.3-.36.45-.54.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.68-1.64-.93-2.25-.24-.57-.48-.49-.68-.5h-.58c-.2 0-.52.07-.8.37-.28.3-1.05 1.03-1.05 2.52s1.08 2.93 1.23 3.13c.15.2 2.12 3.23 5.13 4.53.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.07-.12-.27-.2-.57-.35Z"/></svg></a>
 
 <script>
   document.getElementById("y").textContent = new Date().getFullYear();
@@ -758,313 +383,266 @@ main[id], section[id]{
 (function(){
   const dict = {
     pt: {
-      nav_home:"Início", nav_about:"Sobre", nav_services:"Serviços", nav_contact:"Contato",
-
+      nav_home:"Início",nav_about:"Sobre",nav_services:"Serviços",nav_acquisition:"Aquisição",nav_contact:"Contato",
       hero_h1:"Tecnologia voltada ao comportamento humano",
-hero_lead:"Desenvolvemos sistemas de captura e análise de dados aplicados à compreensão do comportamento humano em diferentes contextos. A partir dessas tecnologias, concebemos e prototipamos soluções físicas e digitais — incluindo dispositivos personalizados e recursos interativos — voltadas à autonomia, aprendizagem e interação.",
-
-      btn_specs:"Ver especificações ↗",
-      btn_quote:"Solicitar cotação",
-      btn_send:"Enviar ↗",
-
-      pic_integration:"Integração de sinais", pic_optical:"Rastreamento ocular", pic_processing:"Processamento de sinais",
-
-      about_title:"Sobre",
-      about_desc:"A Adaptive Motion Solutions (AMS) é uma empresa brasileira dedicada ao desenvolvimento de tecnologias de sensoriamento e software para medir, analisar e apoiar decisões sobre o comportamento humano em contextos reais. Iniciamos operações para atender projetos a partir de 2026, em colaboração com grupos acadêmicos e iniciativas aplicadas em pesquisa, saúde, ergonomia e desempenho humano",
-
-      services_title:"Serviços",
-      services_desc:"Entregamos soluções completas (hardware + software) e serviços técnicos para projetos sob demanda.",
-
-      tag_instrumentation:"Instrumentação", tag_software:"Software", tag_rd:"P&D",
-      svc1_title:"Sistemas ópticos", svc1_desc:"Hardware para captura da oculomotricidade com módulos de sincronização.",
-      svc2_title:"Analytics de movimento humano", svc2_desc:"Ferramentas e módulos de análise para dados motores, integração e relatórios sob demanda.",
-      svc3_title:"Soluções assistivas e lúdicas", svc3_desc:"Linha em desenvolvimento voltada a autonomia e participação de crianças com demandas do neurodesenvolvimento.",
-
-      specs_title:"Rastreador ocular",
-      specs_note:"Sistema tipo óculos/headset com software incluso. Especificações podem variar conforme demanda.",
-      specs_cta1:"Quero cotar ↗",
-
-      spec_k1:"Amostragem",
-      spec_v1:"120 Hz",
-      spec_k2:"Câmera de cena",
-      spec_v2:"720p (1280×720), 110° (POV)",
-      spec_k3:"Calibração",
-      spec_v3:"Ponto único e multipontos",
-      spec_k4:"Uso externo",
-      spec_v4:"Sim",
-      spec_k5:"Dados brutos",
-      spec_v5:"Disponível",
-      spec_k6:"Métricas (120 Hz)",
-      spec_v6:"Diâmetro pupilar (px e mm), gaze raw, fixações, sacadas e piscadas",
-      spec_k7:"Gaze integrado (POV)",
-      spec_v7:"Sim",
-      spec_k8:"Head pose",
-      spec_v8:"9 DoF",
-      spec_k9:"Sincronização",
-      spec_v9:"Disponível",
-      spec_k10:"Software",
-      spec_v10:"Incluso",
-
-      contact_title:"Contato", contact_msg_title:"Mensagem",
-      ph_name:"Seu nome", ph_email:"Seu e-mail", ph_subject:"Assunto (ex.: cotação, parceria, dúvida)", ph_message:"Fale com a AMS",
-
-      sending:"Enviando...",
-      sent_ok:"Mensagem enviada com sucesso!",
-      sent_fail:"Não foi possível enviar agora. Tente novamente ou nos envie um e-mail: contact@amsbrazil.com",
-      sent_err:"Erro de conexão. Tente novamente ou nos envie um e-mail: contact@amsbrazil.com",
-
-      rights:"Todos os direitos reservados."
+      hero_lead:"Desenvolvemos sistemas de captura e análise de dados aplicados à compreensão do comportamento humano em diferentes contextos. A partir dessas tecnologias, concebemos e prototipamos soluções físicas e digitais — incluindo dispositivos personalizados e recursos interativos — voltadas à autonomia, aprendizagem e interação.",
+      btn_specs:"Ver especificações ↗",btn_acquire:"Adquirir ↗",btn_product_sheet:"Product sheet ↗",btn_quote:"Solicitar cotação",btn_custom_quote:"Solicitar cotação personalizada",btn_request_boleto:"Product sheet",btn_send_boleto:"Solicitar boleto ↗",btn_send_product_sheet:"Solicitar product sheet ↗",btn_send:"Enviar ↗",
+      pic_integration:"Integração de sinais",pic_optical:"Rastreamento ocular",pic_processing:"Processamento de sinais",
+      about_title:"Sobre",about_desc:"A Adaptive Motion Solutions (AMS) é uma empresa brasileira dedicada ao desenvolvimento de tecnologias de sensoriamento e software para medir, analisar e apoiar decisões sobre o comportamento humano em contextos reais. Iniciamos operações para atender projetos a partir de 2026, em colaboração com grupos acadêmicos e iniciativas aplicadas em pesquisa, saúde, ergonomia e desempenho humano.",
+      services_title:"Serviços",services_desc:"Entregamos soluções completas (hardware + software) e serviços técnicos para projetos sob demanda.",
+      tag_instrumentation:"Instrumentação",tag_software:"Software",tag_rd:"P&D",
+      svc1_title:"Sistemas ópticos",svc1_desc:"Hardware para captura da oculomotricidade com módulos de sincronização.",svc2_title:"Analytics de movimento humano",svc2_desc:"Ferramentas e módulos de análise para dados motores, integração e relatórios sob demanda.",svc3_title:"Soluções assistivas e lúdicas",svc3_desc:"Linha em desenvolvimento voltada a autonomia e participação de crianças com demandas do neurodesenvolvimento.",
+      specs_title:"Rastreador ocular",specs_note:"Sistema tipo óculos/headset com software incluso. Os parâmetros podem ser personalizados conforme o protocolo experimental, o ambiente de coleta e a demanda do projeto.",
+      spec_k1:"Amostragem",spec_v1:"Até 120 Hz para análise offline e até 60 Hz para visualização/processamento online.",spec_k2:"Câmera de cena",spec_v2:"720p (1280×720), campo de visão aproximado de 110°.",spec_k3:"Calibração",spec_v3:"Calibração multipontos, com ou sem homografia, conforme o protocolo experimental.",spec_k4:"Uso externo",spec_v4:"Compatível com ambientes externos, sujeito às condições de iluminação, contraste e validação experimental.",spec_k5:"Dados brutos",spec_v5:"Acesso aos dados brutos e exportação para análise.",spec_k6:"Métricas oculomotoras",spec_v6:"Diâmetro pupilar, gaze raw, gaze sobre POV, fixações, sacadas e piscadas.",spec_k8:"Head pose / IMU",spec_v8:"Rotation Vector, quaternions, Game Rotation Vector e dados brutos de acelerômetro, giroscópio e magnetômetro.",spec_k10:"Software",spec_v10:"Software de análise incluso.",
+      acq_title:"Product sheet institucional",acq_desc:"Preencha o formulário para receber por e-mail o product sheet do rastreador ocular, com valor da proposta, prazo de entrega, condições fiscais e instruções de pagamento.",
+      product_tag:"Product sheet",product_title:"Adaptive Motion Solutions Headset",product_intro:"O product sheet será enviado individualmente ao e-mail institucional informado, junto com as instruções comerciais para aquisição.",price_label:"Valor da proposta",price_note:"Conforme proposta vigente e condições comerciais aplicáveis.",
+      sheet_info_title:"O que será enviado",sheet_k1:"Ficha técnica",sheet_v1:"Resumo do produto, escopo de fornecimento, critérios de aceite e observações de uso científico.",sheet_k2:"Valor de referência",sheet_v2:"Proposta comercial de referência de R$ 20.000,00, sujeita à confirmação das condições institucionais.",sheet_k3:"Prazo de entrega",sheet_v3:"Entrega prevista até 05/01/2027, podendo ser antecipada conforme produção e logística.",sheet_k4:"Pagamento",sheet_v4:"Instruções para boleto bancário registrado, Pix PJ, transferência ou outra forma indicada pela instituição.",sheet_k5:"Condições fiscais",sheet_v5:"Orientações sobre emissão fiscal e compra com entrega futura, conforme legislação aplicável e orientação contábil.",sheet_k6:"Contato comercial",sheet_v6:"Confirmação dos dados do solicitante, instituição, fomento e endereço de entrega antes da emissão da cobrança.",product_sheet_notice:"O formulário não gera boleto nem cobrança automaticamente. Após o envio, você receberá o Product Sheet por e-mail e deverá responder confirmando a configuração/modalidade desejada.",sheet_form_title:"Solicitar product sheet",sheet_form_intro:"Informe os dados institucionais para receber por e-mail o product sheet e as instruções de pagamento.",
+      scope_title:"Escopo do fornecimento",scope_k1:"Item",scope_v1:"Eye Tracker / Rastreador ocular",scope_k2:"Quantidade",scope_v2:"1 unidade faturada + 1 unidade adicional sem custo, entregue como cortesia comercial.",scope_k3:"Marca/modelo",scope_v3:"Adaptive Motion Solutions Headset",scope_k4:"Aplicação",scope_v4:"Pesquisa científica e estudos experimentais de comportamento humano.",
+      tech_title:"Especificações técnicas",tech_k1:"Câmeras dos olhos",tech_v1:"Câmeras infravermelho com amostragem de até 120 Hz para análise offline e até 60 Hz para visualização/processamento online, com acesso aos dados brutos.",tech_k2:"Câmera de cena (POV)",tech_v2:"720p (1280×720), com campo de visão aproximado de 110°.",tech_k3:"Calibração",tech_v3:"Calibração multipontos, com ou sem homografia, conforme o protocolo experimental.",tech_k4:"Portabilidade",tech_v4:"Sistema portátil em formato de óculos/headset, acoplado à cabeça do participante.",tech_k5:"Uso externo",tech_v5:"Compatível com uso em ambientes externos, sujeito às condições de iluminação, contraste e validação experimental.",tech_k6:"Parâmetros oculomotores",tech_v6:"Diâmetro pupilar em pixels e estimativa em milímetros quando aplicável; gaze raw; gaze sobre câmera de cena; fixações; movimentos sacádicos; piscadas.",tech_k7:"Head pose / IMU",tech_v7:"Rotation Vector, Quaternions, Game Rotation Vector e dados brutos de acelerômetro, giroscópio e magnetômetro, com amostragem de até 100 Hz.",tech_k8:"Dados e software",tech_v8:"Registro/exportação dos dados brutos e processados disponíveis, com software de análise incluso.",
+      commercial_title:"Condições comerciais",comm_k1:"Validade",comm_v1:"60 dias a partir da data de emissão da proposta.",comm_k2:"Prazo máximo de entrega",comm_v2:"05/01/2027. A entrega poderá ser antecipada sem custo adicional, conforme disponibilidade de produção e logística.",comm_k3:"Pagamento",comm_v3:"Boleto bancário registrado emitido em nome da Adaptive Motion Solutions LTDA, após confirmação dos dados do pagador.",comm_k4:"Emissão fiscal",comm_v4:"Impostos e NF-e inclusos no valor da proposta. Para entrega futura, a emissão fiscal será estruturada conforme legislação aplicável e orientação contábil.",
+      accept_title:"Critérios mínimos para aceite técnico",accept_1:"Reconhecimento e funcionamento das câmeras e sensores.",accept_2:"Execução da calibração multipontos e registro/exportação dos dados brutos e processados disponíveis.",accept_3:"Confirmação operacional do equipamento em ambiente de teste compatível com o uso previsto em pesquisa científica.",product_obs:"Este equipamento é destinado ao uso em pesquisa científica e não se destina, por si só, a diagnóstico clínico ou tomada de decisão terapêutica.",
+      boleto_tag:"Boleto bancário",boleto_title:"Solicitar boleto",boleto_intro:"Preencha os dados abaixo. A AMS emitirá o boleto manualmente e enviará ao e-mail informado.",lbl_name:"Nome do solicitante",lbl_email:"E-mail institucional",lbl_phone:"Telefone/WhatsApp",lbl_role:"Cargo ou setor",lbl_institution:"Instituição / Universidade",lbl_cnpj:"CNPJ da instituição",lbl_funding:"Fomento / projeto",lbl_address:"Endereço para cobrança/entrega",lbl_delivery_address:"Endereço de entrega",lbl_zip:"CEP",lbl_street:"Rua",lbl_number:"Nº",lbl_complement:"Complemento",lbl_neighborhood:"Bairro",lbl_city:"Cidade",lbl_state:"UF",lbl_payment_method:"Forma de pagamento preferencial",lbl_notes:"Observações",boleto_privacy:"O envio do formulário não gera boleto automaticamente. A cobrança será conferida e enviada manualmente ao e-mail informado.",product_sheet_privacy:"Você receberá por e-mail o Product Sheet. A cobrança será emitida somente após confirmação da configuração/modalidade desejada.",
+      opt_select_payment:"Selecione uma opção",opt_bank_slip:"Boleto bancário",opt_pix:"Pix PJ",opt_transfer:"Transferência bancária",opt_card:"Cartão de crédito",opt_finance:"A definir com o setor financeiro",
+      ph_fullname:"Nome completo",ph_inst_email:"email@instituicao.br",ph_phone:"(00) 00000-0000",ph_role:"Ex.: compras, financeiro, pesquisador responsável",ph_institution:"Nome da instituição",ph_cnpj:"00.000.000/0000-00",ph_funding:"Ex.: FAPESP, CNPq, CAPES, projeto interno",ph_address:"Rua, número, departamento, cidade, UF, CEP",ph_delivery_address:"Rua, número, departamento, cidade, UF, CEP",ph_zip:"00000-000",ph_street:"Rua / Avenida",ph_number:"Número",ph_complement:"Sala, bloco, departamento...",ph_neighborhood:"Bairro",ph_city:"Cidade",ph_state:"UF",ph_boleto_notes:"Dados adicionais para proposta, boleto ou nota fiscal.",ph_product_sheet_notes:"Informe necessidades de compra, nota fiscal, entrega futura, fomento ou contato do setor financeiro.",
+      contact_title:"Contato",contact_msg_title:"Mensagem",ph_name:"Seu nome",ph_email:"Seu e-mail",ph_subject:"Assunto (ex.: cotação, parceria, dúvida)",ph_message:"Fale com a AMS",
+      sending:"Enviando...",sent_ok:"Mensagem enviada com sucesso!",sent_fail:"Não foi possível enviar agora. Tente novamente ou nos envie um e-mail: contact@amsbrazil.com",sent_err:"Erro de conexão. Tente novamente ou nos envie um e-mail: contact@amsbrazil.com",rights:"Todos os direitos reservados."
     },
-
     en: {
-  nav_home:"Home", nav_about:"About", nav_services:"Services", nav_contact:"Contact",
-
-  hero_h1:"Technology for understanding human behavior",
-  hero_lead:"We develop systems for capturing and analyzing data to help understand human behavior in real-world contexts. Building on these technologies, we design and prototype physical and digital solutions — including custom devices and interactive tools — to support autonomy, learning, and interaction.",
-
-  btn_specs:"View specifications ↗",
-  btn_quote:"Request a quote",
-  btn_send:"Send ↗",
-
-  pic_integration:"Signal integration",
-  pic_optical:"Eye tracking",
-  pic_processing:"Signal processing",
-
-  about_title:"About",
-  about_desc:"Adaptive Motion Solutions (AMS) is a Brazilian company focused on sensing technologies and software to measure, analyze, and support decisions about human behavior in real-world settings. We are starting operations to support projects from 2026 onward, collaborating with academic groups and applied initiatives in research, health, ergonomics, and human performance.",
-
-  services_title:"Services",
-  services_desc:"We deliver complete solutions (hardware + software) and technical services for custom projects.",
-
-  tag_instrumentation:"Instrumentation", tag_software:"Software", tag_rd:"R&D",
-  svc1_title:"Optical systems",
-  svc1_desc:"Hardware for oculomotor capture with synchronization modules.",
-  svc2_title:"Human-movement analytics",
-  svc2_desc:"Tools and modules for motor-data analysis, integrations, and on-demand reporting.",
-  svc3_title:"Assistive & playful solutions",
-  svc3_desc:"A development line focused on autonomy and participation for children with neurodevelopment-related needs.",
-
-  specs_title:"Eye tracker",
-  specs_note:"Glasses/headset form factor with analysis software included. Specifications may vary by project.",
-  specs_cta1:"Request a quote ↗",
-
-  spec_k1:"Sampling",
-  spec_v1:"120 Hz",
-  spec_k2:"Scene camera",
-  spec_v2:"720p (1280×720), 110° (POV)",
-  spec_k3:"Calibration",
-  spec_v3:"Single-point and multi-point",
-  spec_k4:"Outdoor use",
-  spec_v4:"Yes",
-  spec_k5:"Raw data",
-  spec_v5:"Available (export & analysis)",
-  spec_k6:"Metrics (120 Hz)",
-  spec_v6:"Pupil diameter (px & mm), raw gaze, fixations, saccades, and blinks",
-  spec_k7:"Gaze overlaid on POV video",
-  spec_v7:"Yes",
-  spec_k8:"Head pose",
-  spec_v8:"9 DoF",
-  spec_k9:"Synchronization",
-  spec_v9:"Available",
-  spec_k10:"Software",
-  spec_v10:"Included",
-
-  contact_title:"Contact",
-  contact_msg_title:"Message",
-  ph_name:"Your name",
-  ph_email:"Your email",
-  ph_subject:"Subject (e.g., quote, partnership, question)",
-  ph_message:"Write to AMS",
-
-  sending:"Sending...",
-  sent_ok:"Message sent successfully!",
-  sent_fail:"Could not send right now. Please try again or email us at: contact@amsbrazil.com",
-  sent_err:"Connection error. Please try again or email us at: contact@amsbrazil.com",
-
-  rights:"All rights reserved."
-}
+      nav_home:"Home",nav_about:"About",nav_services:"Services",nav_acquisition:"Purchase",nav_contact:"Contact",
+      hero_h1:"Technology for understanding human behavior",hero_lead:"We develop systems for capturing and analyzing data to help understand human behavior in real-world contexts. Building on these technologies, we design and prototype physical and digital solutions — including custom devices and interactive tools — to support autonomy, learning, and interaction.",
+      btn_specs:"View specifications ↗",btn_acquire:"Purchase ↗",btn_product_sheet:"Product sheet ↗",btn_quote:"Request a quote",btn_custom_quote:"Request a custom quote",btn_request_boleto:"Product sheet",btn_send_boleto:"Request bank slip ↗",btn_send_product_sheet:"Request product sheet ↗",btn_send:"Send ↗",
+      pic_integration:"Signal integration",pic_optical:"Eye tracking",pic_processing:"Signal processing",
+      about_title:"About",about_desc:"Adaptive Motion Solutions (AMS) is a Brazilian company focused on sensing technologies and software to measure, analyze, and support decisions about human behavior in real-world settings. We are starting operations to support projects from 2026 onward, collaborating with academic groups and applied initiatives in research, health, ergonomics, and human performance.",
+      services_title:"Services",services_desc:"We deliver complete solutions (hardware + software) and technical services for custom projects.",tag_instrumentation:"Instrumentation",tag_software:"Software",tag_rd:"R&D",svc1_title:"Optical systems",svc1_desc:"Hardware for oculomotor capture with synchronization modules.",svc2_title:"Human-movement analytics",svc2_desc:"Tools and modules for motor-data analysis, integrations, and on-demand reporting.",svc3_title:"Assistive & playful solutions",svc3_desc:"A development line focused on autonomy and participation for children with neurodevelopment-related needs.",
+      specs_title:"Eye tracker",specs_note:"Glasses/headset system with software included. Parameters may be customized according to the experimental protocol, collection environment, and project needs.",
+      spec_k1:"Sampling",spec_v1:"Up to 120 Hz for offline analysis and up to 60 Hz for online viewing/processing.",spec_k2:"Scene camera",spec_v2:"720p (1280×720), approximately 110° field of view.",spec_k3:"Calibration",spec_v3:"Multi-point calibration, with or without homography, according to the experimental protocol.",spec_k4:"Outdoor use",spec_v4:"Compatible with outdoor environments, subject to lighting, contrast, and experimental validation.",spec_k5:"Raw data",spec_v5:"Raw data access and export for analysis.",spec_k6:"Oculomotor metrics",spec_v6:"Pupil diameter, raw gaze, POV gaze, fixations, saccades, and blinks.",spec_k8:"Head pose / IMU",spec_v8:"Rotation Vector, quaternions, Game Rotation Vector, and raw accelerometer, gyroscope, and magnetometer data.",spec_k10:"Software",spec_v10:"Analysis software included.",
+      acq_title:"Institutional product sheet",acq_desc:"Fill out the form to receive the eye tracker product sheet by email, including proposal value, delivery timeline, fiscal terms, and payment instructions.",
+      product_tag:"Product sheet",product_title:"Adaptive Motion Solutions Headset",product_intro:"The product sheet will be sent individually to the institutional email provided, together with commercial instructions for acquisition.",price_label:"Proposal value",price_note:"According to the current proposal and applicable commercial terms.",
+      sheet_info_title:"What will be sent",sheet_k1:"Technical sheet",sheet_v1:"Product summary, scope of supply, acceptance criteria, and scientific-use notes.",sheet_k2:"Reference value",sheet_v2:"Reference commercial proposal of R$ 20,000.00, subject to confirmation of institutional conditions.",sheet_k3:"Delivery timeline",sheet_v3:"Delivery expected by January 5, 2027, with possible anticipation depending on production and logistics.",sheet_k4:"Payment",sheet_v4:"Instructions for registered Brazilian bank slip, Pix PJ, bank transfer, or another method indicated by the institution.",sheet_k5:"Fiscal terms",sheet_v5:"Guidance on tax invoice issuance and future-delivery purchase, according to applicable law and accounting guidance.",sheet_k6:"Commercial contact",sheet_v6:"Confirmation of requester, institution, funding, and delivery address before issuing any charge.",product_sheet_notice:"The form does not automatically generate a bank slip or charge. You will receive the Product Sheet by email and must reply confirming the desired configuration/supply modality.",sheet_form_title:"Request product sheet",sheet_form_intro:"Provide institutional data to receive the product sheet and payment instructions by email.",
+      scope_title:"Scope of supply",scope_k1:"Item",scope_v1:"Eye Tracker",scope_k2:"Quantity",scope_v2:"1 invoiced unit + 1 additional unit at no cost, delivered as a commercial courtesy.",scope_k3:"Brand/model",scope_v3:"Adaptive Motion Solutions Headset",scope_k4:"Application",scope_v4:"Scientific research and experimental studies of human behavior.",
+      tech_title:"Technical specifications",tech_k1:"Eye cameras",tech_v1:"Infrared cameras with up to 120 Hz sampling for offline analysis and up to 60 Hz for online viewing/processing, with raw data access.",tech_k2:"Scene camera (POV)",tech_v2:"720p (1280×720), with approximately 110° field of view.",tech_k3:"Calibration",tech_v3:"Multi-point calibration, with or without homography, according to the experimental protocol.",tech_k4:"Portability",tech_v4:"Portable glasses/headset system attached to the participant's head.",tech_k5:"Outdoor use",tech_v5:"Compatible with outdoor use, subject to lighting, contrast, and experimental validation.",tech_k6:"Oculomotor parameters",tech_v6:"Pupil diameter in pixels and millimeter estimate when applicable; raw gaze; gaze over scene camera; fixations; saccadic movements; blinks.",tech_k7:"Head pose / IMU",tech_v7:"Rotation Vector, Quaternions, Game Rotation Vector, and raw accelerometer, gyroscope, and magnetometer data, sampled up to 100 Hz.",tech_k8:"Data and software",tech_v8:"Recording/export of raw and processed data, with analysis software included.",
+      commercial_title:"Commercial terms",comm_k1:"Validity",comm_v1:"60 days from proposal issue date.",comm_k2:"Maximum delivery date",comm_v2:"January 5, 2027. Delivery may be anticipated at no additional cost, subject to production and logistics availability.",comm_k3:"Payment",comm_v3:"Registered Brazilian bank slip issued in the name of Adaptive Motion Solutions LTDA after payer data confirmation.",comm_k4:"Tax invoice",comm_v4:"Taxes and Brazilian NF-e included in the proposal value. For future delivery, tax issuance will follow applicable legislation and accounting guidance.",
+      accept_title:"Minimum technical acceptance criteria",accept_1:"Recognition and operation of cameras and sensors.",accept_2:"Execution of multi-point calibration and recording/export of available raw and processed data.",accept_3:"Operational confirmation of the equipment in a test environment compatible with its intended scientific research use.",product_obs:"This equipment is intended for scientific research use and is not, by itself, intended for clinical diagnosis or therapeutic decision-making.",
+      boleto_tag:"Bank slip",boleto_title:"Request bank slip",boleto_intro:"Fill out the information below. AMS will manually issue the bank slip and send it to the provided email.",lbl_name:"Requester name",lbl_email:"Institutional email",lbl_phone:"Phone/WhatsApp",lbl_role:"Role or department",lbl_institution:"Institution / University",lbl_cnpj:"Institution CNPJ",lbl_funding:"Funding / project",lbl_address:"Billing/delivery address",lbl_delivery_address:"Delivery address",lbl_zip:"ZIP / Postal code",lbl_street:"Street",lbl_number:"No.",lbl_complement:"Additional info",lbl_neighborhood:"Neighborhood",lbl_city:"City",lbl_state:"State",lbl_payment_method:"Preferred payment method",lbl_notes:"Notes",boleto_privacy:"Submitting this form does not automatically generate a bank slip. The charge will be checked and manually sent to the provided email.",product_sheet_privacy:"You will receive the Product Sheet by email. Any charge will be issued only after confirmation of the desired configuration/supply modality.",
+      opt_select_payment:"Select an option",opt_bank_slip:"Brazilian bank slip",opt_pix:"Pix PJ",opt_transfer:"Bank transfer",opt_card:"Credit card",opt_finance:"To be defined with finance department",
+      ph_fullname:"Full name",ph_inst_email:"email@institution.edu",ph_phone:"Phone number",ph_role:"E.g., purchasing, finance, principal investigator",ph_institution:"Institution name",ph_cnpj:"Brazilian CNPJ",ph_funding:"E.g., FAPESP, CNPq, CAPES, internal project",ph_address:"Street, number, department, city, state, ZIP",ph_delivery_address:"Street, number, department, city, state, ZIP",ph_zip:"Postal code",ph_street:"Street / Avenue",ph_number:"Number",ph_complement:"Room, building, department...",ph_neighborhood:"Neighborhood",ph_city:"City",ph_state:"State",ph_boleto_notes:"Additional information for proposal, bank slip, or tax invoice.",ph_product_sheet_notes:"Include purchasing, tax invoice, future delivery, funding, or finance contact requirements.",
+      contact_title:"Contact",contact_msg_title:"Message",ph_name:"Your name",ph_email:"Your email",ph_subject:"Subject (e.g., quote, partnership, question)",ph_message:"Write to AMS",
+      sending:"Sending...",sent_ok:"Message sent successfully!",sent_fail:"Could not send right now. Please try again or email us at: contact@amsbrazil.com",sent_err:"Connection error. Please try again or email us at: contact@amsbrazil.com",rights:"All rights reserved."
+    }
   };
 
-  let currentLang = "pt";
-
+  let currentLang="pt";
   function applyLang(lang){
-    currentLang = (lang === "en") ? "en" : "pt";
-    const t = dict[currentLang];
-
-    document.documentElement.lang = (currentLang === "en") ? "en" : "pt-BR";
-
-    document.querySelectorAll("[data-i18n]").forEach(el=>{
-      const key = el.getAttribute("data-i18n");
-      if(t[key]) el.textContent = t[key];
-    });
-
-    document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
-      const key = el.getAttribute("data-i18n-placeholder");
-      if(t[key]) el.setAttribute("placeholder", t[key]);
-    });
-
-    const btnPT = document.getElementById("btnPT");
-    const btnEN = document.getElementById("btnEN");
-    if(btnPT && btnEN){
-      btnPT.setAttribute("aria-pressed", currentLang === "pt" ? "true" : "false");
-      btnEN.setAttribute("aria-pressed", currentLang === "en" ? "true" : "false");
-    }
-
-    localStorage.setItem("ams_lang", currentLang);
+    currentLang=(lang==="en")?"en":"pt";
+    const t=dict[currentLang];
+    document.documentElement.lang=(currentLang==="en")?"en":"pt-BR";
+    document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.getAttribute("data-i18n");if(t[k]) el.textContent=t[k];});
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{const k=el.getAttribute("data-i18n-placeholder");if(t[k]) el.setAttribute("placeholder",t[k]);});
+    const btnPT=document.getElementById("btnPT");const btnEN=document.getElementById("btnEN");
+    if(btnPT&&btnEN){btnPT.setAttribute("aria-pressed",currentLang==="pt"?"true":"false");btnEN.setAttribute("aria-pressed",currentLang==="en"?"true":"false");}
+    localStorage.setItem("ams_lang",currentLang);
   }
-
-  function detectLang(){
-    const saved = localStorage.getItem("ams_lang");
-    if(saved === "pt" || saved === "en") return saved;
-    const nav = (navigator.language || "").toLowerCase();
-    return nav.startsWith("pt") ? "pt" : "en";
-  }
-
-  window.AMS_i18n = {dict, applyLang, getLang: ()=>currentLang};
-
+  function detectLang(){const saved=localStorage.getItem("ams_lang");if(saved==="pt"||saved==="en") return saved;const nav=(navigator.language||"").toLowerCase();return nav.startsWith("pt")?"pt":"en";}
+  window.AMS_i18n={dict,applyLang,getLang:()=>currentLang};
   applyLang(detectLang());
-
-  const btnPT = document.getElementById("btnPT");
-  const btnEN = document.getElementById("btnEN");
-  if(btnPT) btnPT.addEventListener("click", ()=>applyLang("pt"));
-  if(btnEN) btnEN.addEventListener("click", ()=>applyLang("en"));
+  document.getElementById("btnPT")?.addEventListener("click",()=>applyLang("pt"));
+  document.getElementById("btnEN")?.addEventListener("click",()=>applyLang("en"));
 })();
 </script>
 
 <script>
 (function(){
-  const form = document.getElementById("contactForm");
-  const status = document.getElementById("formStatus");
-  if(!form || !status) return;
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const i18n = window.AMS_i18n;
-    const lang = i18n ? i18n.getLang() : "pt";
-    const t = (i18n && i18n.dict && i18n.dict[lang]) ? i18n.dict[lang] : null;
-
-    status.textContent = t ? t.sending : "Enviando...";
-    const endpoint = form.getAttribute("data-endpoint");
-
-    try{
-      const data = new FormData(form);
-      const res = await fetch(endpoint, {
-        method: "POST",
-        body: data,
-        headers: { "Accept": "application/json" }
-      });
-
-      if(res.ok){
-        form.reset();
-        status.textContent = t ? t.sent_ok : "Mensagem enviada com sucesso!";
-      }else{
-        status.textContent = t ? t.sent_fail : "Não foi possível enviar agora. Tente novamente ou nos envie um e-mail: contact@amsbrazil.com";
-      }
-    }catch(err){
-      status.textContent = t ? t.sent_err : "Erro de conexão. Tente novamente ou nos envie um e-mail: contact@amsbrazil.com";
-    }
-  });
-})();
-</script>
-
-<script>
-(function(){
-  const btn = document.querySelector(".menuToggle");
-  const nav = document.getElementById("mainNav");
-  const header = document.querySelector("header");
-  if(!btn || !nav || !header) return;
-
-  function setHeaderH(){
-    const h = header.getBoundingClientRect().height;
-    document.documentElement.style.setProperty("--headerH", `${Math.ceil(h)}px`);
-  }
-
-  // mede na carga e quando a janela muda (resize/orientation)
+  const btn=document.querySelector(".menuToggle");
+  const nav=document.getElementById("mainNav");
+  const header=document.querySelector("header");
+  if(!btn||!nav||!header) return;
+  function setHeaderH(){document.documentElement.style.setProperty("--headerH",`${Math.ceil(header.getBoundingClientRect().height)}px`);}
   setHeaderH();
-  window.addEventListener("resize", setHeaderH, {passive:true});
-  window.addEventListener("orientationchange", ()=>setTimeout(setHeaderH, 50), {passive:true});
-
-  btn.addEventListener("click", ()=>{
-    const open = nav.classList.toggle("open");
-    btn.setAttribute("aria-expanded", open ? "true" : "false");
-    // quando abrir/fechar, a altura pode mudar um pouco
-    setTimeout(setHeaderH, 0);
-  });
-
-  // FECHA o menu ao clicar em um link (mobile)
-  nav.querySelectorAll('a[href^="#"]').forEach(a=>{
-    a.addEventListener("click", ()=>{
-      nav.classList.remove("open");
-      btn.setAttribute("aria-expanded","false");
-      setTimeout(setHeaderH, 0);
-    });
-  });
+  window.addEventListener("resize",setHeaderH,{passive:true});
+  window.addEventListener("orientationchange",()=>setTimeout(setHeaderH,50),{passive:true});
+  btn.addEventListener("click",()=>{const open=nav.classList.toggle("open");btn.setAttribute("aria-expanded",open?"true":"false");setTimeout(setHeaderH,0);});
+  nav.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener("click",()=>{nav.classList.remove("open");btn.setAttribute("aria-expanded","false");setTimeout(setHeaderH,0);});});
 })();
 </script>
-
 
 <script>
-/* ===== Specs toggle logic (mobile-friendly scroll) ===== */
 (function(){
-  const toggle = document.getElementById("specsToggle");
-  const collapsible = document.getElementById("specsCollapsible");
-  const panel = document.getElementById("specsPanel");
-  if(!toggle || !collapsible || !panel) return;
-
-  const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
-
-  function scrollToPanel(){
-    // dá um tempo pro layout “abrir” e calcular a altura correta
-    requestAnimationFrame(()=>{
-      requestAnimationFrame(()=>{
-        panel.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    });
-  }
-
-  function openSpecs(fromUserClick){
-    collapsible.classList.add("open");
-    toggle.setAttribute("aria-expanded","true");
-    toggle.textContent = "×";
-
-    // no celular, leva a pessoa até a caixa
-    if(fromUserClick && isMobile()){
-      scrollToPanel();
-    }
-  }
-
-  function closeSpecs(){
-    collapsible.classList.remove("open");
-    toggle.setAttribute("aria-expanded","false");
-    toggle.textContent = "+";
-  }
-
-  function toggleSpecs(){
-    const open = collapsible.classList.contains("open");
-    if(open) closeSpecs();
-    else openSpecs(true);
-  }
-
-  toggle.addEventListener("click", (e)=>{
-    e.preventDefault();
-    toggleSpecs();
-  });
-
-  // Botão "Ver especificações" no hero: abre e também rola no mobile
-  document.querySelectorAll('[data-open-specs="true"]').forEach(a=>{
-    a.addEventListener("click", ()=>{
-      setTimeout(()=>{ openSpecs(true); }, 260);
-    });
-  });
-
-  document.addEventListener("keydown",(e)=>{
-    if(e.key === "Escape" && collapsible.classList.contains("open")){
-      closeSpecs();
-    }
-  });
+  const toggle=document.getElementById("specsToggle");
+  const collapsible=document.getElementById("specsCollapsible");
+  const panel=document.getElementById("specsPanel");
+  if(!toggle||!collapsible||!panel) return;
+  const isMobile=()=>window.matchMedia("(max-width: 768px)").matches;
+  function scrollToPanel(){requestAnimationFrame(()=>{requestAnimationFrame(()=>{panel.scrollIntoView({behavior:"smooth",block:"start"});});});}
+  function openSpecs(fromUserClick){collapsible.classList.add("open");toggle.setAttribute("aria-expanded","true");toggle.textContent="×";if(fromUserClick&&isMobile()) scrollToPanel();}
+  function closeSpecs(){collapsible.classList.remove("open");toggle.setAttribute("aria-expanded","false");toggle.textContent="+";}
+  toggle.addEventListener("click",(e)=>{e.preventDefault();collapsible.classList.contains("open")?closeSpecs():openSpecs(true);});
+  document.querySelectorAll('[data-open-specs="true"]').forEach(a=>{a.addEventListener("click",()=>{setTimeout(()=>{openSpecs(true);},260);});});
+  document.addEventListener("keydown",(e)=>{if(e.key==="Escape"&&collapsible.classList.contains("open")) closeSpecs();});
 })();
 </script>
 
+<script>
+(function(){
+  const section=document.getElementById("acquisition");
+  const formCard=document.getElementById("product-sheet-form");
+  if(!section||!formCard) return;
+
+  function openProductSheetForm(doScroll){
+    section.classList.add("open");
+    if(doScroll){
+      requestAnimationFrame(()=>{
+        formCard.scrollIntoView({behavior:"smooth",block:"start"});
+      });
+    }
+  }
+
+  document.querySelectorAll('[data-open-product-sheet="true"]').forEach(el=>{
+    el.addEventListener("click",(e)=>{
+      e.preventDefault();
+      openProductSheetForm(true);
+      history.replaceState(null,"","#acquisition");
+    });
+  });
+
+  if(window.location.hash==="#acquisition"||window.location.hash==="#product-sheet-form"){
+    openProductSheetForm(false);
+  }
+})();
+</script>
+
+<script>
+(function(){
+  function getText(key,fallback){
+    const i18n=window.AMS_i18n;
+    const lang=i18n?i18n.getLang():"pt";
+    const t=(i18n&&i18n.dict&&i18n.dict[lang])?i18n.dict[lang]:null;
+    return t&&t[key]?t[key]:fallback;
+  }
+
+  function onlyDigits(value){
+    return String(value||"").replace(/\D/g,"");
+  }
+
+  function syncDeliveryAddress(form){
+    if(!form) return;
+    const get=(id)=>String(document.getElementById(id)?.value||"").trim();
+    const cep=get("endereco_cep");
+    const rua=get("endereco_rua");
+    const numero=get("endereco_numero");
+    const complemento=get("endereco_complemento");
+    const bairro=get("endereco_bairro");
+    const cidade=get("endereco_cidade");
+    const uf=get("endereco_uf").toUpperCase();
+    const partes=[];
+    if(rua) partes.push(rua);
+    if(numero) partes.push("nº "+numero);
+    if(complemento) partes.push(complemento);
+    if(bairro) partes.push(bairro);
+    const cidadeUf=[cidade,uf].filter(Boolean).join(" - ");
+    if(cidadeUf) partes.push(cidadeUf);
+    if(cep) partes.push("CEP "+cep);
+    const full=document.getElementById("endereco_full");
+    if(full) full.value=partes.join(", ");
+  }
+
+  function formDataToObject(form){
+    syncDeliveryAddress(form);
+    const data=new FormData(form);
+    const obj={};
+    data.forEach((value,key)=>{
+      if(key==="_gotcha") return;
+      obj[key]=value;
+    });
+    return obj;
+  }
+
+  function attachCepAutofill(){
+    const cepInput=document.getElementById("endereco_cep");
+    const status=document.getElementById("cepStatus");
+    if(!cepInput) return;
+    const setStatus=(txt)=>{if(status) status.textContent=txt||"";};
+    async function buscarCep(){
+      const cep=onlyDigits(cepInput.value);
+      if(cep.length!==8){
+        setStatus(cep.length?"Digite um CEP com 8 números.":"");
+        return;
+      }
+      cepInput.value=cep.replace(/(\d{5})(\d{3})/,"$1-$2");
+      setStatus("Buscando endereço pelo CEP...");
+      try{
+        const res=await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const info=await res.json();
+        if(!res.ok||info.erro){setStatus("CEP não encontrado. Preencha o endereço manualmente.");return;}
+        const rua=document.getElementById("endereco_rua");
+        const bairro=document.getElementById("endereco_bairro");
+        const cidade=document.getElementById("endereco_cidade");
+        const uf=document.getElementById("endereco_uf");
+        if(rua&&!rua.value) rua.value=info.logradouro||"";
+        if(bairro&&!bairro.value) bairro.value=info.bairro||"";
+        if(cidade&&!cidade.value) cidade.value=info.localidade||"";
+        if(uf&&!uf.value) uf.value=info.uf||"";
+        syncDeliveryAddress(document.getElementById("productSheetForm"));
+        setStatus("Endereço preenchido pelo CEP. Confira número e complemento.");
+      }catch(err){
+        setStatus("Não foi possível consultar o CEP agora. Preencha o endereço manualmente.");
+      }
+    }
+    cepInput.addEventListener("blur",buscarCep);
+    cepInput.addEventListener("input",()=>{cepInput.value=onlyDigits(cepInput.value).slice(0,8);});
+    ["endereco_rua","endereco_numero","endereco_complemento","endereco_bairro","endereco_cidade","endereco_uf"].forEach(id=>{
+      document.getElementById(id)?.addEventListener("input",()=>syncDeliveryAddress(document.getElementById("productSheetForm")));
+    });
+  }
+
+  function attachFormspreeAjax(formId,statusId){
+    const form=document.getElementById(formId);
+    const status=document.getElementById(statusId);
+    if(!form||!status) return;
+    form.addEventListener("submit",async(e)=>{
+      e.preventDefault();
+      status.textContent=getText("sending","Enviando...");
+      const endpoint=form.getAttribute("data-endpoint")||form.getAttribute("action");
+      try{
+        const data=new FormData(form);
+        const res=await fetch(endpoint,{method:"POST",body:data,headers:{"Accept":"application/json"}});
+        if(res.ok){form.reset();status.textContent=getText("sent_ok","Mensagem enviada com sucesso!");}
+        else{status.textContent=getText("sent_fail","Não foi possível enviar agora. Tente novamente ou nos envie um e-mail: contact@amsbrazil.com");}
+      }catch(err){status.textContent=getText("sent_err","Erro de conexão. Tente novamente ou nos envie um e-mail: contact@amsbrazil.com");}
+    });
+  }
+
+  function attachAppsScriptProductSheet(formId,statusId){
+    const form=document.getElementById(formId);
+    const status=document.getElementById(statusId);
+    if(!form||!status) return;
+    form.addEventListener("submit",async(e)=>{
+      e.preventDefault();
+      const endpoint=form.getAttribute("data-endpoint")||form.getAttribute("action");
+      if(!endpoint||endpoint.includes("COLE_AQUI")){
+        status.textContent="Configure a URL do Web App do Google Apps Script antes de publicar.";
+        return;
+      }
+      status.textContent=getText("sending","Enviando...");
+      try{
+        const payload=formDataToObject(form);
+        await fetch(endpoint,{
+          method:"POST",
+          mode:"no-cors",
+          headers:{"Content-Type":"text/plain;charset=utf-8"},
+          body:JSON.stringify(payload)
+        });
+        form.reset();
+        status.textContent="Product Sheet enviado para o e-mail cadastrado. Verifique seu e-mail e finalize a compra.";
+      }catch(err){
+        status.textContent=getText("sent_err","Erro de conexão. Tente novamente ou nos envie um e-mail: contact@amsbrazil.com");
+      }
+    });
+  }
+
+  attachCepAutofill();
+  attachFormspreeAjax("contactForm","formStatus");
+  attachAppsScriptProductSheet("productSheetForm","productSheetStatus");
+})();
+</script>
 </body>
 </html>
