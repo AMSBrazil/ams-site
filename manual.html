@@ -672,6 +672,14 @@
     .footer { margin: 3rem 0 0; padding: 2rem 0; color: var(--muted); font-size: .86rem; }
 
     .manual-section.search-hidden, .nav-list li.search-hidden { display: none; }
+    mark.search-highlight {
+      padding: .04em .12em;
+      border-radius: .2em;
+      color: #111;
+      background: #ffd54a;
+      box-shadow: 0 0 0 1px rgba(142, 104, 0, .18);
+      scroll-margin-top: 96px;
+    }
 
     @media (max-width: 1040px) {
       :root { --sidebar: 245px; }
@@ -1265,17 +1273,92 @@
         });
       });
 
-      search.addEventListener('input', function () {
+      var searchTimer;
+
+      function clearSearchHighlights() {
+        Array.prototype.forEach.call(document.querySelectorAll('mark.search-highlight'), function (mark) {
+          var parent = mark.parentNode;
+          parent.replaceChild(document.createTextNode(mark.textContent), mark);
+          parent.normalize();
+        });
+      }
+
+      function restoreDetailsAfterSearch() {
+        Array.prototype.forEach.call(document.querySelectorAll('details[data-search-was-open]'), function (item) {
+          item.open = item.getAttribute('data-search-was-open') === 'true';
+          item.removeAttribute('data-search-was-open');
+        });
+      }
+
+      function highlightMatches(root, term) {
+        var nodes = [];
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode: function (node) {
+            var parent = node.parentElement;
+            if (!parent || !node.nodeValue.trim() || parent.closest('script, style, mark')) return NodeFilter.FILTER_REJECT;
+            return NodeFilter.FILTER_ACCEPT;
+          }
+        });
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+
+        nodes.forEach(function (node) {
+          var text = node.nodeValue;
+          var lowerText = text.toLocaleLowerCase('pt-BR');
+          var start = 0;
+          var index = lowerText.indexOf(term, start);
+          if (index === -1) return;
+
+          var fragment = document.createDocumentFragment();
+          while (index !== -1) {
+            if (index > start) fragment.appendChild(document.createTextNode(text.slice(start, index)));
+            var mark = document.createElement('mark');
+            mark.className = 'search-highlight';
+            mark.textContent = text.slice(index, index + term.length);
+            fragment.appendChild(mark);
+            start = index + term.length;
+            index = lowerText.indexOf(term, start);
+          }
+          if (start < text.length) fragment.appendChild(document.createTextNode(text.slice(start)));
+          node.parentNode.replaceChild(fragment, node);
+        });
+      }
+
+      function runSearch() {
+        clearSearchHighlights();
         var term = search.value.trim().toLocaleLowerCase('pt-BR');
         var visible = 0;
+
+        if (!term) restoreDetailsAfterSearch();
+
         sections.forEach(function (section) {
           var match = !term || section.textContent.toLocaleLowerCase('pt-BR').indexOf(term) !== -1;
           section.classList.toggle('search-hidden', !match);
           var navItem = document.querySelector('.nav-list a[href="#' + section.id + '"]');
           if (navItem) navItem.parentElement.classList.toggle('search-hidden', !match);
-          if (match) visible += 1;
+
+          if (match) {
+            visible += 1;
+            if (term) {
+              Array.prototype.forEach.call(section.querySelectorAll('details'), function (item) {
+                if (item.textContent.toLocaleLowerCase('pt-BR').indexOf(term) === -1) return;
+                if (!item.hasAttribute('data-search-was-open')) item.setAttribute('data-search-was-open', String(item.open));
+                item.open = true;
+              });
+              highlightMatches(section, term);
+            }
+          }
         });
+
         noResults.style.display = visible ? 'none' : 'block';
+        if (term) {
+          var firstMatch = document.querySelector('mark.search-highlight');
+          if (firstMatch) firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+
+      search.addEventListener('input', function () {
+        window.clearTimeout(searchTimer);
+        searchTimer = window.setTimeout(runSearch, 220);
       });
 
       if ('IntersectionObserver' in window) {
